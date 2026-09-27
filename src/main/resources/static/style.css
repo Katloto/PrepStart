@@ -1,0 +1,631 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+    color: #111111;
+}
+
+.login-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    background-color: #ffffff;
+}
+
+.login-left {
+    width: 38%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #dddddd;
+}
+
+.login-logo {
+    width: 260px;
+    height: auto;
+    display: block;
+}
+
+.login-right {
+    width: 62%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    width: 480px;
+    padding: 28px 45px 32px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.10);
+}
+
+.login-card h1 {
+    text-align: center;
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #333333;
+    margin-bottom: 26px;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    background-color: #dce3ea;
+    padding: 0 11px;
+    font-size: 11px;
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: #333333;
+}
+
+.form-group input:focus {
+    box-shadow: 0 0 0 2px rgba(18, 103, 232, 0.25);
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 40px;
+}
+
+.eye-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: #555555;
+    cursor: pointer;
+    padding: 0;
+}
+
+.eye-button:hover {
+    color: #222222;
+}
+
+.eye-button svg {
+    width: 18px;
+    height: 18px;
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -5px;
+    margin-bottom: 20px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 9px;
+}
+
+.remember input {
+    width: 13px;
+    height: 13px;
+    accent-color: #1734a5;
+    cursor: pointer;
+}
+
+.forgot-password {
+    font-size: 9px;
+    color: #2875d9;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    width: 100%;
+    height: 42px;
+    border: none;
+    border-radius: 4px;
+    background-color: #1267e8;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #0d55c5;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 27px;
+    margin-bottom: 14px;
+}
+
+.divider .line {
+    flex: 1;
+    height: 1px;
+    background-color: #cccccc;
+}
+
+.divider span {
+    font-size: 9px;
+    color: #333333;
+    white-space: nowrap;
+}
+
+.social-login {
+    display: flex;
+    gap: 10px;
+}
+
+.social-button {
+    flex: 1;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    background-color: #ffffff;
+    border: 1px solid #d7dce2;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.social-button:hover {
+    background-color: #f6f6f6;
+}
+
+.google-icon {
+    width: 19px;
+    height: 19px;
+    display: block;
+    flex-shrink: 0;
+}
+
+.microsoft-icon {
+    width: 18px;
+    height: 18px;
+    display: block;
+    flex-shrink: 0;
+}
+
+.create-account {
+    text-align: center;
+    margin-top: 17px;
+    font-size: 10px;
+    color: #222222;
+}
+
+.create-account a {
+    color: #1267e8;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 3px;
+}
+
+.create-account a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+    .login-page {
+        flex-direction: column;
+    }
+
+    .login-left {
+        width: 100%;
+        min-height: 200px;
+        border-right: none;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .login-right {
+        width: 100%;
+        min-height: auto;
+        padding: 25px 15px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 480px;
+    }
+}
+
+@media (max-width: 500px) {
+    .social-login {
+        flex-direction: column;
+    }
+}
+
+/* =====================================================
+   REGISTER PAGE
+===================================================== */
+
+.register-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 30px;
+}
+
+.register-card {
+    width: 450px;
+    padding: 30px 45px 28px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.10);
+}
+
+.register-logo {
+    display: block;
+    width: 30px;
+    height: auto;
+    margin: -10px auto 30px; /* Top is -10px, bottom is 25px */
+}
+
+.register-card h1 {
+    text-align: center;
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.register-subtitle {
+    text-align: center;
+    font-size: 12px;
+    color: #444444;
+    margin-bottom: 24px;
+}
+
+.register-card .form-group {
+    margin-bottom: 17px;
+}
+
+.register-button {
+
+    margin-top: 3px;
+}
+
+@media (max-width: 500px) {
+    .register-page {
+        padding: 15px;
+    }
+
+    .register-card {
+        width: 100%;
+        padding: 25px 25px;
+    }
+}
+
+/* =====================================================
+   VERIFY PAGE
+===================================================== */
+
+.verify-page {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 30px;
+}
+
+.verify-card {
+    width: 430px;
+    padding: 38px 45px 32px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.10);
+    text-align: center;
+}
+
+.verify-logo {
+    width: 90px;
+    height: auto;
+    display: block;
+    margin: 0 auto 22px;
+}
+
+.verify-card h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #222222;
+    margin-bottom: 15px;
+}
+
+.verify-instruction {
+    font-size: 11px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 8px;
+}
+
+.verify-email {
+    font-size: 10px;
+    color: #777777;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.verification-inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 22px;
+}
+
+.code-input {
+    width: 40px;
+    height: 44px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    background-color: #f4f5f6;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #222222;
+    outline: none;
+    transition: 0.2s;
+}
+
+.code-input:focus {
+    background-color: #ffffff;
+    border-color: #1267e8;
+    box-shadow:
+            0 0 0 2px rgba(18, 103, 232, 0.15);
+}
+
+.code-expiry {
+    font-size: 10px;
+    color: #555555;
+    margin-bottom: 20px;
+}
+
+#timer {
+    font-weight: 700;
+    color: #1267e8;
+    margin-left: 3px;
+}
+
+.verify-button {
+    width: 100%;
+    height: 42px;
+    border: none;
+    border-radius: 4px;
+    background-color: #1267e8;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.verify-button:hover {
+    background-color: #0d55c5;
+}
+
+.resend-code {
+    margin-top: 19px;
+    font-size: 10px;
+    color: #555555;
+}
+
+.resend-code a {
+    color: #1267e8;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 3px;
+}
+
+.resend-code a:hover {
+    text-decoration: underline;
+}
+
+.back-login {
+    margin-top: 15px;
+    font-size: 10px;
+}
+
+.back-login a {
+    color: #555555;
+    text-decoration: none;
+}
+
+.back-login a:hover {
+    color: #1267e8;
+    text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+    .verify-page {
+        padding: 15px;
+    }
+
+    .verify-card {
+        width: 100%;
+        padding: 30px 20px;
+    }
+
+    .verification-inputs {
+        gap: 5px;
+    }
+
+    .code-input {
+        width: 38px;
+        height: 42px;
+    }
+}
+
+/* =====================================================
+   FORGOT PASSWORD PAGE
+===================================================== */
+
+.forgot-page {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 30px;
+}
+
+.forgot-card {
+    width: 430px;
+    padding: 38px 45px 32px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.10);
+    text-align: center;
+}
+
+.forgot-logo {
+    width: 90px;
+    height: auto;
+    display: block;
+    margin: 0 auto 22px;
+}
+
+.forgot-card h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #222222;
+    margin-bottom: 10px;
+}
+
+.forgot-description {
+    font-size: 11px;
+    line-height: 1.6;
+    color: #666666;
+    margin: 0 auto 25px;
+    max-width: 320px;
+}
+
+.forgot-card .form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.forgot-card .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.forgot-card .form-group input {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    background-color: #dce3ea;
+    padding: 0 11px;
+    font-size: 11px;
+    outline: none;
+}
+
+.forgot-card .form-group input::placeholder {
+    color: #333333;
+}
+
+.forgot-card .form-group input:focus {
+    box-shadow:
+            0 0 0 2px rgba(18, 103, 232, 0.25);
+}
+
+.forgot-card .login-button {
+    margin-top: 2px;
+}
+
+.forgot-back {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #555555;
+}
+
+.forgot-back a {
+    color: #1267e8;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 3px;
+}
+
+.forgot-back a:hover {
+    text-decoration: underline;
+}
+
+.forgot-create {
+    margin-top: 14px;
+    font-size: 13px;
+    color: #555555;
+}
+
+.forgot-create a {
+    color: #1267e8;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 3px;
+}
+
+.forgot-create a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+
+    .forgot-page {
+        padding: 15px;
+    }
+
+    .forgot-card {
+        width: 100%;
+        padding: 30px 25px;
+    }
+}

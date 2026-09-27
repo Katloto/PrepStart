@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PrepStart - Home</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="register-page">
+    <div class="register-card" style="text-align: center;">
+
+        <img src="/images/prepstart-logo.png" class="login-logo" alt="PrepStart Logo" style="margin: 0 auto 20px;">
+
+        <h1>
+            Welcome, <span th:text="${user != null ? user.firstName : 'Guest'}">User</span>!
+        </h1>
+
+        <p class="subtitle">
+            You have successfully logged in to PrepStart.
+        </p>
+
+        <p style="font-size: 12px; color: #666; margin-bottom: 25px;">
+            Logged in as: <strong th:text="${user != null ? user.email : 'unknown'}">email@example.com</strong>
+        </p>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="login-button">Logout</button>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

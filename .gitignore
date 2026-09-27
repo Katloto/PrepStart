@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Application Secrets (DO NOT COMMIT) ###
+src/main/resources/application.properties
+src/main/resources/application-*.properties
+
+### Uploaded Files ###
+uploads/

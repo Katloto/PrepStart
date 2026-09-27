@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PrepStart - Create Account</title>
+
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+
+<div class="register-page">
+    <div class="register-card">
+
+        <img src="/images/prepstart-logo.png" class="login-logo" alt="PrepStart Logo">
+
+        <h1>
+            Create Your Account
+        </h1>
+
+        <p class="register-subtitle">
+            Create an account to get started
+        </p>
+
+        <p th:if="${error}"
+           style="color: red;
+           text-align: center;
+           font-size: 12px;
+           margin-bottom: 15px;"
+           th:text="${error}">
+
+        </p>
+
+        <form th:action="@{/register}" method="post">
+
+            <div class="form-group">
+
+                <label for="fullName">
+                    Full Name
+                </label>
+
+                <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="registerEmail">
+                    Email Address
+                </label>
+
+                <!--
+                    USER WILL ENTER THEIR EMAIL HERE
+                    Later Spring Boot will use this email
+                    to send the verification code.
+                -->
+
+                <input
+                        type="email"
+                        id="registerEmail"
+                        name="email"
+                        placeholder="Enter your email address"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Create a username"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="registerPassword">
+                    Password
+                </label>
+
+
+                <div class="password-wrapper">
+
+                    <input
+                            type="password"
+                            id="registerPassword"
+                            name="password"
+                            placeholder="Create a password"
+                    >
+
+
+                    <!-- Password visibility button -->
+
+                    <button
+                            type="button"
+                            class="eye-button"
+                            id="registerTogglePassword"
+                            aria-label="Show password">
+
+                        <svg
+                                id="registerEyeOpen"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+
+                            <path
+                                    d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                            />
+
+                            <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                            />
+
+                        </svg>
+
+                        <svg
+                                id="registerEyeClosed"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                style="display: none;">
+
+                            <path
+                                    d="M3 3l18 18"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                            />
+
+                            <path
+                                    d="M10.6 5.1C11.1 5 11.5 5 12 5c6.5 0 10 7 10 7a17.5 17.5 0 0 1-4.1 4.7"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                            />
+
+                            <path
+                                    d="M6.1 6.1C3.6 7.8 2 12 2 12s3.5 7 10 7c1.3 0 2.5-.3 3.5-.7"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                            />
+
+                        </svg>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
+
+
+                <div class="password-wrapper">
+
+                    <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Confirm your password"
+                    >
+
+                    <button
+                            type="button"
+                            class="eye-button"
+                            id="confirmTogglePassword"
+                            aria-label="Show password">
+
+                        <svg
+                                id="confirmEyeOpen"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+
+                            <path
+                                    d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                            />
+
+                            <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                            />
+
+                        </svg>
+
+                        <svg
+                                id="confirmEyeClosed"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                style="display: none;">
+
+                            <path
+                                    d="M3 3l18 18"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                            />
+
+                            <path
+                                    d="M10.6 5.1C11.1 5 11.5 5 12 5c6.5 0 10 7 10 7a17.5 17.5 0 0 1-4.1 4.7"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                            />
+
+                            <path
+                                    d="M6.1 6.1C3.6 7.8 2 12 2 12s3.5 7 10 7c1.3 0 2.5-.3 3.5-.7"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                            />
+
+                        </svg>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!--
+                IMPORTANT:
+
+                This does NOT create an account yet.
+
+                Later Spring Boot will process this form.
+            -->
+
+            <button type="submit" class="login-button register-button"> Create Account </button>
+
+        </form>
+
+        <p class="create-account">
+
+            Already have an account?
+
+            <a href="/login">
+                Login
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+
+    const registerPassword =
+        document.getElementById("registerPassword");
+
+    const registerTogglePassword =
+        document.getElementById("registerTogglePassword");
+
+    const registerEyeOpen =
+        document.getElementById("registerEyeOpen");
+
+    const registerEyeClosed =
+        document.getElementById("registerEyeClosed");
+
+
+    registerTogglePassword.addEventListener("click", function () {
+
+        if (registerPassword.type === "password") {
+
+            registerPassword.type = "text";
+
+            registerEyeOpen.style.display = "none";
+
+            registerEyeClosed.style.display = "block";
+
+            registerTogglePassword.setAttribute(
+                "aria-label",
+                "Hide password"
+            );
+
+        } else {
+
+            registerPassword.type = "password";
+
+            registerEyeOpen.style.display = "block";
+
+            registerEyeClosed.style.display = "none";
+
+            registerTogglePassword.setAttribute(
+                "aria-label",
+                "Show password"
+            );
+
+        }
+
+    });
+
+    const confirmPassword =
+        document.getElementById("confirmPassword");
+
+    const confirmTogglePassword =
+        document.getElementById("confirmTogglePassword");
+
+    const confirmEyeOpen =
+        document.getElementById("confirmEyeOpen");
+
+    const confirmEyeClosed =
+        document.getElementById("confirmEyeClosed");
+
+
+    confirmTogglePassword.addEventListener("click", function () {
+
+        if (confirmPassword.type === "password") {
+
+            confirmPassword.type = "text";
+
+            confirmEyeOpen.style.display = "none";
+
+            confirmEyeClosed.style.display = "block";
+
+            confirmTogglePassword.setAttribute(
+                "aria-label",
+                "Hide password"
+            );
+
+        } else {
+
+            confirmPassword.type = "password";
+
+            confirmEyeOpen.style.display = "block";
+
+            confirmEyeClosed.style.display = "none";
+
+            confirmTogglePassword.setAttribute(
+                "aria-label",
+                "Show password"
+            );
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
