@@ -15,7 +15,6 @@ public class Role {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    // Getters and Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 

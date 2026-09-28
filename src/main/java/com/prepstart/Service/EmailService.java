@@ -17,31 +17,7 @@ public class EmailService {
         this.mailSender = mailSender;
     }
 
-    // ===== EXISTING: Verification code email =====
-    public void sendVerificationEmail(String toEmail, String code) {
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(fromEmail);
-            message.setTo(toEmail);
-            message.setSubject("PrepStart - Verify Your Account");
-
-            String body = "Welcome to PrepStart!\n\n"
-                    + "Thank you for registering. Your verification code is:\n\n"
-                    + "        " + code + "\n\n"
-                    + "Enter this code on the verification page to activate your account.\n\n"
-                    + "If you did not register for PrepStart, please ignore this email.\n\n"
-                    + "— The PrepStart Team";
-
-            message.setText(body);
-            mailSender.send(message);
-
-            System.out.println("✅ Verification email sent to: " + toEmail);
-        } catch (Exception e) {
-            System.err.println("❌ Failed to send verification email: " + e.getMessage());
-        }
-    }
-
-    // ===== NEW: Password reset email =====
+    // PASSWORD RESET EMAIL (used by ForgotPasswordController)
     public void sendPasswordResetEmail(String toEmail, String resetLink) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -66,6 +42,37 @@ public class EmailService {
 
         } catch (Exception e) {
             System.err.println("❌ Failed to send reset email: " + e.getMessage());
+        }
+    }
+
+    // WELCOME EMAIL WITH LOGIN CREDENTIALS
+    // (used when admin creates a new account)
+    public void sendCredentialsEmail(String toEmail, String firstName,
+                                     String loginEmail, String plainPassword) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(fromEmail);
+            message.setTo(toEmail);
+            message.setSubject("Your PrepStart Account Credentials");
+
+            String body = "Hi " + firstName + ",\n\n"
+                    + "Your PrepStart account has been created by the administrator.\n\n"
+                    + "Here are your login credentials:\n\n"
+                    + "   Email:    " + loginEmail + "\n"
+                    + "   Password: " + plainPassword + "\n\n"
+                    + "You can log in here:\n"
+                    + "http://localhost:8080/login\n\n"
+                    + "For security, we recommend you change your password after your first login "
+                    + "using the 'Forgot Password' link on the login page.\n\n"
+                    + "— The PrepStart Team";
+
+            message.setText(body);
+            mailSender.send(message);
+
+            System.out.println(" Credentials email sent to: " + toEmail);
+
+        } catch (Exception e) {
+            System.err.println(" Failed to send credentials email: " + e.getMessage());
         }
     }
 }

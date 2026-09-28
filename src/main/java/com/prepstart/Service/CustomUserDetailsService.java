@@ -22,21 +22,22 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        // 1. Find the user in our database by email
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-        // 2. Determine the user's role (if any)
-        String roleName = "STUDENT"; // Default role if none is set
+        String roleName = "STUDENT";
         if (user.getRole() != null) {
             roleName = user.getRole().getName();
         }
 
-        // 3. Return a Spring Security UserDetails object
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),           // username (used by Spring)
-                user.getPasswordHash(),    // hashed password from DB
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + roleName))
-        );
+        // Block login unless status is "active"
+        boolean enabled = "active".equals(user.getStatus());
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getEmail())
+                .password(user.getPasswordHash())
+                .authorities(new SimpleGrantedAuthority("ROLE_" + roleName))
+                .disabled(!enabled)  // Spring will reject disabled users
+                .build();
     }
 }

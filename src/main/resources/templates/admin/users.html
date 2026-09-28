@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Users</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .admin-page { max-width: 1100px; margin: 40px auto; padding: 20px; font-family: Arial, sans-serif; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .top-bar h1 { margin: 0; }
+        .btn { padding: 8px 18px; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600; text-decoration: none; display: inline-block; }
+        .btn-primary { background: #1267e8; color: white; }
+        .btn-primary:hover { background: #0d55c5; }
+        .btn-logout { background: #e74c3c; color: white; margin-left: 8px; }
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table th, .admin-table td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 13px; }
+        .admin-table th { background: #f4f5f6; font-weight: 700; }
+        .status { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .status-active { background: #d4edda; color: #155724; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .empty { color: #888; font-style: italic; padding: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="admin-page">
+
+    <div class="top-bar">
+        <h1>👥 User Management</h1>
+        <div>
+            <a href="/admin/users/create" class="btn btn-primary">+ Create User</a>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-logout">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <p th:if="${users.isEmpty()}" class="empty">No users yet. Click "Create User" to add one.</p>
+
+    <table class="admin-table" th:if="${!users.isEmpty()}">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.firstName + ' ' + user.lastName}">Name</td>
+            <td th:text="${user.email}">email</td>
+            <td th:text="${user.role != null ? user.role.name : '—'}">role</td>
+            <td>
+                    <span class="status"
+                          th:classappend="${user.status == 'active' ? 'status-active' : 'status-pending'}"
+                          th:text="${user.status}">status</span>
+            </td>
+            <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd')}">date</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

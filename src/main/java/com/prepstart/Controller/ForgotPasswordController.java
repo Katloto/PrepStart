@@ -45,7 +45,7 @@ public class ForgotPasswordController {
         return "forgot-password";
     }
 
-    // ===== STEP 2: Show the reset password form =====
+    // STEP 2: Show the reset password form
     @GetMapping("/reset-password")
     public String showResetPasswordPage(
             @RequestParam(value = "token", required = false) String token,
@@ -53,22 +53,22 @@ public class ForgotPasswordController {
 
         if (token == null || token.isEmpty()) {
             model.addAttribute("error", "Invalid reset link.");
-            return "reset-password";
+            return "set-password";
         }
 
         Optional<User> userOptional = userService.findUserByValidResetToken(token);
 
         if (userOptional.isEmpty()) {
             model.addAttribute("error", "This reset link is invalid or has expired. Please request a new one.");
-            return "reset-password";
+            return "set-password";
         }
 
         // Pass the token to the form so it can be submitted with the new password
         model.addAttribute("token", token);
-        return "reset-password";
+        return "set-password";
     }
 
-    // ===== STEP 3: Submit new password =====
+    // STEP 3: Submit new password
     @PostMapping("/reset-password")
     public String handleResetPassword(
             @RequestParam("token") String token,
@@ -80,7 +80,7 @@ public class ForgotPasswordController {
         if (!password.equals(confirmPassword)) {
             model.addAttribute("error", "Passwords do not match.");
             model.addAttribute("token", token);
-            return "reset-password";
+            return "set-password";
         }
 
         // Find user by valid token
@@ -88,7 +88,7 @@ public class ForgotPasswordController {
 
         if (userOptional.isEmpty()) {
             model.addAttribute("error", "This reset link is invalid or has expired.");
-            return "reset-password";
+            return "set-password";
         }
 
         // Update password

@@ -18,9 +18,6 @@ public class User {
     @Column(name = "last_name", nullable = false, length = 100)
     private String lastName;
 
-    @Column(name = "username", unique = true, length = 100)
-    private String username;
-
     @Column(name = "email", nullable = false, unique = true, length = 255)
     private String email;
 
@@ -65,7 +62,6 @@ public class User {
         }
     }
 
-    // ===== GETTERS AND SETTERS =====
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -75,9 +71,6 @@ public class User {
 
     public String getLastName() { return lastName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
-
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }

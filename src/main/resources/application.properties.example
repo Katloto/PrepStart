@@ -5,6 +5,12 @@ spring.datasource.password=YOUR_DB_PASSWORD
 spring.jpa.hibernate.ddl-auto=validate
 spring.jpa.show-sql=true
 
+# DEFAULT ADMIN ACCOUNT (bootstrap on first startup)
+prepstart.admin.email=YOUR_ADMIN_EMAIL
+prepstart.admin.password=YOUR_STRONG_ADMIN_PASSWORD
+prepstart.admin.first-name=PrepStart
+prepstart.admin.last-name=Admin
+
 # ============ GMAIL (for sending emails) ============
 spring.mail.username=your-prepstart-gmail@gmail.com
 spring.mail.password=YOUR_16_CHAR_APP_PASSWORD

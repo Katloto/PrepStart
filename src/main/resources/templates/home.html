@@ -7,6 +7,12 @@
 </head>
 <body>
 
+<a th:if="${user != null and user.role != null and user.role.name == 'ADMIN'}"
+   href="/admin/users"
+   style="display:inline-block; margin: 20px; padding: 12px 24px; background: #1267e8; color: white; text-decoration: none; border-radius: 4px; font-weight: 600;">
+    🛡️ Admin Panel
+</a>
+
 <div class="register-page">
     <div class="register-card" style="text-align: center;">
 

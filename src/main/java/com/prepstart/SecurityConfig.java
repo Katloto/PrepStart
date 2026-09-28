@@ -32,7 +32,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/style.css", "/images/**", "/css/**", "/js/**").permitAll()
-                        .requestMatchers("/login", "/register", "/verify", "/forgot-password", "/reset-password").permitAll()
+                        .requestMatchers("/login", "/forgot-password", "/reset-password").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -46,8 +47,8 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .defaultSuccessUrl("/", true)
                         .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService)     // For Google
-                                .oidcUserService(customOidcUserService)   // For Microsoft
+                                .userService(customOAuth2UserService)     // Google
+                                .oidcUserService(customOidcUserService)   // Microsoft
                         )
                 )
                 .rememberMe(remember -> remember
