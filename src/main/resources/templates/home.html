@@ -1,41 +1,113 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>PrepStart - Home</title>
-    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8" />
+    <title>PrepStart - Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" href="/dist/assets/index-Cb-9To41.css" />
 </head>
 <body>
 
-<a th:if="${user != null and user.role != null and user.role.name == 'ADMIN'}"
-   href="/admin/users"
-   style="display:inline-block; margin: 20px; padding: 12px 24px; background: #1267e8; color: white; text-decoration: none; border-radius: 4px; font-weight: 600;">
-    🛡️ Admin Panel
-</a>
+<div class="page-wrapper">
 
-<div class="register-page">
-    <div class="register-card" style="text-align: center;">
 
-        <img src="/images/prepstart-logo.png" class="login-logo" alt="PrepStart Logo" style="margin: 0 auto 20px;">
-
-        <h1>
-            Welcome, <span th:text="${user != null ? user.firstName : 'Guest'}">User</span>!
-        </h1>
-
-        <p class="subtitle">
-            You have successfully logged in to PrepStart.
-        </p>
-
-        <p style="font-size: 12px; color: #666; margin-bottom: 25px;">
-            Logged in as: <strong th:text="${user != null ? user.email : 'unknown'}">email@example.com</strong>
-        </p>
-
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="login-button">Logout</button>
-        </form>
-
+    <div id="react-navbar"
+         th:attr="data-username=${#authentication != null ? #authentication.name : ''}">
     </div>
+
+
+
+
+    <!-- ===== WELCOME / SLIDESHOW SECTION ===== -->
+    <section class="welcome-banner">
+
+        <!-- Slides: each one is a full-size background image, only .active is visible -->
+        <div class="slides">
+            <div class="slide active" th:style="'background-image: url(' + @{/images/slide1.jpg} + ')'"></div>
+            <div class="slide" th:style="'background-image: url(' + @{/images/slide2.jpg} + ')'"></div>
+            <div class="slide" th:style="'background-image: url(' + @{/images/slide3.jpg} + ')'"></div>
+            <div class="slide" th:style="'background-image: url(' + @{/images/slide4.jpg} + ')'"></div>
+            <div class="slide" th:style="'background-image: url(' + @{/images/slide5.jpg} + ')'"></div>
+        </div>
+
+        <!-- Dark overlay sits above the images, below the text/controls -->
+        <div class="slide-overlay"></div>
+
+        <button class="carousel-arrow left" type="button" onclick="changeSlide(-1)">&#10094;</button>
+
+        <div class="welcome-content">
+            <h1>Welcome to PrepStart</h1>
+            <p>Empowering students with the tools they need to excel.</p>
+            <a th:href="@{/modules}" class="btn-outline">Explore Modules &#8594;</a>
+        </div>
+
+        <button class="carousel-arrow right" type="button" onclick="changeSlide(1)">&#10095;</button>
+
+        <div class="carousel-dots">
+            <span class="active" onclick="goToSlide(0)"></span>
+            <span onclick="goToSlide(1)"></span>
+            <span onclick="goToSlide(2)"></span>
+            <span onclick="goToSlide(3)"></span>
+            <span onclick="goToSlide(4)"></span>
+        </div>
+    </section>
+
+    <div id="react-footer"></div>
+
 </div>
+
+<script>
+    function toggleSearch() {
+        const box = document.getElementById('searchBox');
+        const input = document.getElementById('searchInput');
+        box.classList.toggle('expanded');
+        if (box.classList.contains('expanded')) {
+            input.focus();
+        }
+    }
+
+    document.addEventListener('click', function (event) {
+        const box = document.getElementById('searchBox');
+        const input = document.getElementById('searchInput');
+        if (!box.contains(event.target) && input.value.trim() === '') {
+            box.classList.remove('expanded');
+        }
+    });
+
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.carousel-dots span');
+    let autoPlayTimer;
+
+    function showSlide(index) {
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+
+        currentSlide = (index + slides.length) % slides.length;
+
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+    }
+
+    function changeSlide(direction) {
+        showSlide(currentSlide + direction);
+        resetAutoPlay();
+    }
+
+    function goToSlide(index) {
+        showSlide(index);
+        resetAutoPlay();
+    }
+
+    function resetAutoPlay() {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = setInterval(() => showSlide(currentSlide + 1), 5000);
+    }
+
+    resetAutoPlay();
+</script>
+
+<script type="module" crossorigin src="/dist/assets/index-DD7Peopr.js"></script>
 
 </body>
 </html>
