@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PrepStart Dashboard</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVIGATION BAR
+     ========================= -->
+
+<nav class="navbar">
+
+
+    <!-- LOGO -->
+
+    <div class="logo">
+
+        <img src="/prepstart-logo.png"
+             alt="PrepStart Logo">
+
+    </div>
+
+
+    <!-- NAVIGATION LINKS -->
+
+    <div class="nav-links">
+
+        <a href="#"
+           class="nav-link">
+            Home
+        </a>
+
+        <a href="/dashboard"
+           class="nav-link active">
+            Dashboard
+        </a>
+
+        <a href="/mymodules"
+           class="nav-link">
+            My Modules
+        </a>
+
+        <a href="/uploadcontent"
+           class="nav-link">
+            Upload Content
+        </a>
+
+        <a href="/quizme"
+           class="nav-link">
+            QuizMe
+        </a>
+
+        <a href="/progress"
+           class="nav-link">
+            Progress
+        </a>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+
+    <div class="nav-right">
+
+        <button class="search-button"
+                type="button">
+
+            <span class="search-icon"></span>
+
+        </button>
+
+
+        <button class="profile-button"
+                type="button">
+
+            <span class="profile-initials">
+                KM
+            </span>
+
+            <span class="dropdown-arrow">
+                ⌄
+            </span>
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     DASHBOARD CONTENT
+     ========================= -->
+
+<main class="dashboard-container">
+
+
+    <!-- =========================
+         WELCOME SECTION
+         ========================= -->
+
+    <section class="welcome-section">
+
+        <div>
+
+            <h1>
+
+                Welcome Back,
+
+                <span th:text="${user.firstName}">
+                    Student
+                </span>!
+
+                <span class="wave">
+                    👋
+                </span>
+
+            </h1>
+
+
+            <p>
+                Ready to continue your learning journey?
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         STATISTICS
+         ========================= -->
+
+    <section class="statistics">
+
+
+        <!-- MY COURSES -->
+
+        <div class="stat-card">
+
+            <h3>
+                My Courses
+            </h3>
+
+            <div class="stat-value"
+                 th:text="${courseCount}">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <!-- STUDY MATERIALS -->
+
+        <div class="stat-card">
+
+            <h3>
+                Study Materials
+            </h3>
+
+            <div class="stat-value"
+                 th:text="${studyMaterialCount}">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <!-- QUIZZES TAKEN -->
+
+        <div class="stat-card">
+
+            <h3>
+                Quizzes Taken
+            </h3>
+
+            <div class="stat-value"
+                 th:text="${quizCount}">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <!-- AVERAGE SCORE -->
+
+        <div class="stat-card">
+
+            <h3>
+                Average Score
+            </h3>
+
+            <div class="stat-value">
+
+                <span th:text="${averageScore}">
+                    0
+                </span>
+
+                <span th:if="${averageScore != null}">
+                    %
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         CONTINUE LEARNING
+         ========================= -->
+
+    <section class="continue-learning">
+
+
+        <!-- SECTION HEADER -->
+
+        <div class="continue-learning-header">
+
+
+            <h2>
+
+                📚
+
+                <span>
+                    Continue Learning
+                </span>
+
+            </h2>
+
+
+            <a href="/mymodules"
+               class="view-all">
+
+                View all
+
+            </a>
+
+        </div>
+
+
+
+        <!-- LOWER DASHBOARD AREA -->
+
+        <div class="dashboard-lower-section">
+
+
+            <!-- =========================
+                 LEARNING MATERIALS
+                 ========================= -->
+
+            <div class="learning-content">
+
+
+                <div class="learning-cards">
+
+
+                    <!-- CARD 1 -->
+
+                    <div class="learning-card">
+
+
+                        <div class="material-icon">
+                            📘
+                        </div>
+
+
+                        <h3>
+                            Learning Material
+                        </h3>
+
+
+                        <div class="material-info">
+
+                            <span>
+                                Course
+                            </span>
+
+                            <span>
+                                Year
+                            </span>
+
+                        </div>
+
+
+                        <a href="#"
+                           class="view-button">
+
+                            View
+
+                        </a>
+
+                    </div>
+
+
+
+                    <!-- CARD 2 -->
+
+                    <div class="learning-card">
+
+
+                        <div class="material-icon">
+                            📕
+                        </div>
+
+
+                        <h3>
+                            Learning Material
+                        </h3>
+
+
+                        <div class="material-info">
+
+                            <span>
+                                Course
+                            </span>
+
+                            <span>
+                                Year
+                            </span>
+
+                        </div>
+
+
+                        <a href="#"
+                           class="view-button">
+
+                            View
+
+                        </a>
+
+                    </div>
+
+
+
+                    <!-- CARD 3 -->
+
+                    <div class="learning-card">
+
+
+                        <div class="material-icon">
+                            📄
+                        </div>
+
+
+                        <h3>
+
+                            Learning Material
+
+                        </h3>
+
+
+                        <div class="material-info">
+
+                            <span>
+                                Course
+                            </span>
+
+                            <span>
+                                Year
+
+                            </span>
+
+                        </div>
+
+
+                        <a href="#"
+                           class="view-button">
+
+                            View
+
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 RECENT ACTIVITIES
+                 ========================= -->
+
+            <aside class="recent-activities">
+
+
+                <h2>
+                    Recent Activities
+                </h2>
+
+
+
+                <!-- ACTIVITY 1 -->
+
+                <div class="activity">
+
+                    <p>
+
+                        Recent activity
+
+                    </p>
+
+                    <span>
+
+                        Recently
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- ACTIVITY 2 -->
+
+                <div class="activity">
+
+                    <p>
+
+                        Recent activity
+
+                    </p>
+
+                    <span>
+
+                        Recently
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- ACTIVITY 3 -->
+
+                <div class="activity">
+
+                    <p>
+
+                        Recent activity
+
+                    </p>
+
+                    <span>
+
+                        Recently
+
+                    </span>
+
+                </div>
+
+
+            </aside>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

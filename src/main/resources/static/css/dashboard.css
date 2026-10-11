@@ -1,0 +1,484 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+    color: #111111;
+}
+
+.navbar {
+    width: 100%;
+    height: 68px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 28px;
+
+    background-color: #ffffff;
+
+    border-bottom: 3px solid #1976d2;
+
+    position: relative;
+}
+
+/* LOGO */
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    min-width: 220px;
+
+    gap: 8px;
+}
+
+.logo-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #1976d2;
+    color: white;
+
+    font-size: 24px;
+    font-weight: bold;
+
+    border-radius: 8px 8px 18px 8px;
+}
+
+.logo-text {
+    font-size: 18px;
+    color: #1976d2;
+}
+
+.logo-text strong {
+    color: #111111;
+}
+
+/* NAVIGATION */
+
+.nav-links {
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 25px;
+}
+
+.nav-link {
+    text-decoration: none;
+
+    color: #1769aa;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    padding: 23px 0 21px;
+
+    transition: 0.2s;
+}
+
+.nav-link:hover {
+    color: #0d47a1;
+}
+
+.nav-link.active {
+    color: #111111;
+    font-weight: 600;
+}
+
+/* RIGHT SIDE */
+
+.nav-right {
+    min-width: 120px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 15px;
+}
+
+.search-button {
+    width: 35px;
+    height: 35px;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-icon {
+    width: 18px;
+    height: 18px;
+
+    border: 2px solid #111111;
+    border-radius: 50%;
+
+    position: relative;
+}
+
+.search-icon::after {
+    content: "";
+
+    position: absolute;
+
+    width: 8px;
+    height: 2px;
+
+    background-color: #111111;
+
+    right: -6px;
+    bottom: -3px;
+
+    transform: rotate(45deg);
+}
+
+/* PROFILE */
+
+.profile-button {
+    border: none;
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    cursor: pointer;
+}
+
+.profile-initials {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #e3efff;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #222222;
+}
+
+.dropdown-arrow {
+    font-size: 18px;
+    color: #333333;
+}
+
+.dashboard-container {
+    width: 100%;
+    padding: 30px 35px;
+}
+
+.welcome-section {
+    width: 100%;
+    margin-bottom: 35px;
+}
+
+.welcome-section h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111111;
+}
+
+.welcome-section p {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #111111;
+}
+
+.wave {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 25px;
+}
+
+.statistics {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 28px;
+
+    margin-bottom: 70px;
+}
+
+.stat-card {
+    min-height: 122px;
+
+    background-color: #eaf3ff;
+
+    border: 1px solid #9aa6b2;
+
+    border-radius: 25px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    text-align: center;
+}
+
+.stat-card:first-child {
+    border: 3px solid #2196d2;
+}
+
+.stat-card h3 {
+    margin: 0 0 10px;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #111111;
+}
+
+.stat-value {
+    font-size: 32px;
+
+    font-weight: 700;
+
+    color: #111111;
+}
+.progress-container {
+    width: 100%;
+    padding: 30px 35px;
+}
+
+.progress-header {
+    margin-bottom: 30px;
+}
+
+.progress-header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #111111;
+}
+
+.progress-header p {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #555555;
+}
+/* =========================
+   CONTINUE LEARNING
+   ========================= */
+
+.continue-learning {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.continue-learning-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+}
+
+.continue-learning-header h2 {
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.view-all {
+    margin-right: 42%;
+
+    text-decoration: none;
+
+    color: #1976d2;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.view-all:hover {
+    color: #125aa0;
+}
+
+
+/* =========================
+   LOWER DASHBOARD SECTION
+   ========================= */
+
+.dashboard-lower-section {
+    width: 100%;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 45px;
+}
+
+
+/* =========================
+   LEARNING CARDS
+   ========================= */
+
+.learning-content {
+    flex: 1;
+}
+
+.learning-cards {
+    display: flex;
+
+    gap: 28px;
+}
+
+.learning-card {
+    width: 195px;
+    height: 198px;
+
+    background-color: #f5faff;
+
+    border: 1px solid #cccccc;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 15px;
+
+    text-align: center;
+}
+
+.material-icon {
+    font-size: 42px;
+
+    margin-bottom: 8px;
+}
+
+.learning-card h3 {
+    margin: 0 0 12px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    min-height: 30px;
+}
+
+.material-info {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    margin-bottom: 12px;
+
+    font-size: 11px;
+}
+
+.view-button {
+    width: 67px;
+    height: 22px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: #1976d2;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 3px;
+
+    font-size: 11px;
+}
+
+.view-button:hover {
+    background-color: #125aa0;
+}
+
+
+/* =========================
+   RECENT ACTIVITIES
+   ========================= */
+
+.recent-activities {
+    width: 300px;
+
+    min-height: 245px;
+
+    background-color: #eef7ff;
+
+    border: 1px solid #b8c4cf;
+
+    border-radius: 15px;
+
+    padding: 18px 22px;
+}
+
+.recent-activities h2 {
+    margin: 0 0 20px;
+
+    font-size: 18px;
+
+    font-weight: 500;
+}
+
+.activity {
+    margin-bottom: 18px;
+}
+
+.activity p {
+    margin: 0;
+
+    font-size: 13px;
+
+    color: #111111;
+}
+
+.activity span {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 12px;
+
+    color: #555555;
+}
