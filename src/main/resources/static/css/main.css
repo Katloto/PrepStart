@@ -1,0 +1,1084 @@
+/* ============================
+   PrepStart - main.css
+   ============================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f4f6f9;
+    color: #1a1a1a;
+}
+
+/* ---------- Page wrapper (gives the rounded white card look) ---------- */
+.page-wrapper {
+    max-width: 1300px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================
+   NAVBAR
+   ============================ */
+.navbar { display: flex;
+    align-items: center;
+    padding: 14px 32px;
+    background: #ffffff;
+    border-bottom: 3px solid #2563eb; }
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar .logo img {
+    height: 56px;
+    width: auto;
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #374151;
+    font-size: 15px;
+    font-weight: 500;
+    padding-bottom: 4px;
+}
+
+.navbar .nav-links a.active {
+    color: #2563eb;
+    border-bottom: 2px solid #2563eb;
+}
+
+.navbar .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border-radius: 20px;
+    overflow: hidden;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    transition: width 0.3s ease, padding 0.3s ease;
+}
+
+.search-box.expanded {
+    width: 220px;
+    padding: 0 8px 0 4px;
+}
+
+.search-icon-btn {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #111827;
+    font-size: 14px;
+    padding: 0;
+}
+
+.search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    width: 0;
+    opacity: 0;
+    transition: width 0.3s ease, opacity 0.2s ease;
+}
+
+.search-box.expanded .search-input {
+    width: 160px;
+    opacity: 1;
+}
+
+.btn-login {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.btn-login:hover {
+    background: #1d4ed8;
+}
+
+.avatar-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #111827;
+    font-size: 16px;
+    background: transparent;
+}
+/* ============================
+   HERO SECTION (public landing)
+   ============================ */
+.hero {
+    position: relative;
+    min-height: 480px;
+    margin-top: 16px;
+    background: linear-gradient(to right, rgba(10, 15, 30, 0.85), rgba(10, 15, 30, 0.35)),
+    url('/images/lecture-hall.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    color: #fff;
+}
+
+.hero-content {
+    max-width: 480px;
+}
+
+.hero-content h1 {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.hero-content h1 .highlight {
+    color: #3b82f6;
+}
+
+.hero-content p {
+    margin-top: 16px;
+    font-size: 16px;
+    color: #d1d5db;
+    line-height: 1.5;
+}
+
+.btn-primary {
+    margin-top: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #2563eb;
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+/* ============================
+   WELCOME / CAROUSEL SECTION (logged-in home)
+   ============================ */
+.welcome-banner {
+    position: relative;
+    min-height: 480px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* Slide images stack on top of each other; only .active is visible */
+.slides {
+    position: absolute;
+    inset: 0;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+/* Dark gradient overlay so text stays readable over any photo */
+.slide-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(10, 15, 30, 0.85), rgba(10, 15, 30, 0.25));
+}
+
+/* Everything below needs to sit above the images + overlay */
+.welcome-banner .welcome-content,
+.welcome-banner .carousel-arrow,
+.welcome-banner .carousel-dots {
+    position: relative;
+    z-index: 2;
+}
+
+.welcome-content {
+    max-width: 460px;
+}
+
+.welcome-content h1 {
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.welcome-content p {
+    margin-top: 12px;
+    color: #d1d5db;
+    font-size: 15px;
+}
+
+.btn-outline {
+    margin-top: 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #2563eb;
+    color: #fff;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-arrow.left { left: 20px; }
+.carousel-arrow.right { right: 20px; }
+
+.carousel-dots {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.carousel-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.carousel-dots span.active {
+    background: #fff;
+}
+
+/* ============================
+   LOGIN PAGE (split layout)
+   ============================ */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+}
+
+.login-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    padding: 40px;
+}
+
+.login-logo {
+    max-width: 320px;
+    width: 100%;
+    height: auto;
+}
+
+.login-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    padding: 40px;
+    margin: 40px 40px 40px 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 380px;
+}
+
+.login-card h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0f1f3d;
+    text-align: center;
+}
+
+.auth-subtitle {
+    margin-top: 6px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.auth-form {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.form-group input {
+    padding: 11px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background: #f3f4f6;
+}
+
+.form-group input:focus {
+    border-color: #2563eb;
+    background: #fff;
+}
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 42px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #374151;
+    cursor: pointer;
+}
+
+.checkbox-label input {
+    width: 16px;
+    height: 16px;
+    accent-color: #2563eb;
+}
+
+.forgot-link {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-submit {
+    margin-top: 6px;
+    justify-content: center;
+    width: 100%;
+    border: none;
+}
+
+.divider {
+    margin: 26px 0;
+    position: relative;
+    text-align: center;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e5e7eb;
+}
+
+.divider span {
+    position: relative;
+    background: #fff;
+    padding: 0 12px;
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+.oauth-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.oauth-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    cursor: pointer;
+}
+
+.oauth-btn:hover {
+    background: #f9fafb;
+}
+
+.auth-footer {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.auth-footer a {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+@media (max-width: 800px) {
+    .login-page {
+        flex-direction: column;
+    }/* ============================
+   PrepStart - main.css
+   ============================ */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background-color: #f4f6f9;
+        color: #1a1a1a;
+    }
+
+    /* ---------- Page wrapper (gives the rounded white card look) ---------- */
+    .page-wrapper {
+        max-width: 1300px;
+        margin: 20px auto;
+        background: #fff;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ============================
+       NAVBAR
+       ============================ */
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 32px;
+        background: #ffffff;
+        border-bottom: 3px solid #2563eb;
+    }
+
+    .navbar .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .navbar .logo img {
+        height: 56px;
+        width: auto;
+    }
+
+    .navbar .nav-links {
+        display: flex;
+        gap: 28px;
+        list-style: none;
+        margin-left: 40px;
+    }
+
+    .navbar .nav-links a {
+        text-decoration: none;
+        color: #374151;
+        font-size: 15px;
+        font-weight: 500;
+        padding-bottom: 4px;
+    }
+
+    .navbar .nav-links a.active {
+        color: #2563eb;
+        border-bottom: 2px solid #2563eb;
+    }
+
+    .navbar .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        background: #f3f4f6;
+        border-radius: 20px;
+        overflow: hidden;
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        transition: width 0.3s ease, padding 0.3s ease;
+    }
+
+    .search-box.expanded {
+        width: 220px;
+        padding: 0 8px 0 4px;
+    }
+
+    .search-icon-btn {
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #6b7280;
+        font-size: 15px;
+    }
+
+    .search-input {
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 14px;
+        width: 0;
+        opacity: 0;
+        transition: width 0.3s ease, opacity 0.2s ease;
+    }
+
+    .search-box.expanded .search-input {
+        width: 160px;
+        opacity: 1;
+    }
+
+    .btn-login {
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        padding: 9px 18px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+    }
+
+    .btn-login:hover {
+        background: #1d4ed8;
+    }
+
+    .avatar-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #4b5563;
+        font-size: 18px;
+    }
+
+    /* ============================
+       HERO SECTION (public landing)
+       ============================ */
+    .hero {
+        position: relative;
+        min-height: 480px;
+        margin-top: 16px;
+        background: linear-gradient(to right, rgba(10, 15, 30, 0.85), rgba(10, 15, 30, 0.35)),
+        url('/images/lecture-hall.jpg') center/cover no-repeat;
+        display: flex;
+        align-items: center;
+        padding: 0 60px;
+        color: #fff;
+    }
+
+    .hero-content {
+        max-width: 480px;
+    }
+
+    .hero-content h1 {
+        font-size: 42px;
+        font-weight: 800;
+        line-height: 1.2;
+    }
+
+    .hero-content h1 .highlight {
+        color: #3b82f6;
+    }
+
+    .hero-content p {
+        margin-top: 16px;
+        font-size: 16px;
+        color: #d1d5db;
+        line-height: 1.5;
+    }
+
+    .btn-primary {
+        margin-top: 24px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #2563eb;
+        color: #fff;
+        padding: 12px 22px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .btn-primary:hover {
+        background: #1d4ed8;
+    }
+
+    /* ============================
+       WELCOME / CAROUSEL SECTION (logged-in home)
+       ============================ */
+    .welcome-banner {
+        position: relative;
+        min-height: 480px;
+        margin-top: 16px;
+        display: flex;
+        align-items: center;
+        padding: 0 60px;
+        color: #fff;
+        overflow: hidden;
+    }
+
+    /* Slide images stack on top of each other; only .active is visible */
+    .slides {
+        position: absolute;
+        inset: 0;
+    }
+
+    .slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+
+    .slide.active {
+        opacity: 1;
+    }
+
+    /* Dark gradient overlay so text stays readable over any photo */
+    .slide-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, rgba(10, 15, 30, 0.85), rgba(10, 15, 30, 0.25));
+    }
+
+    /* Everything below needs to sit above the images + overlay */
+    .welcome-banner .welcome-content,
+    .welcome-banner .carousel-arrow,
+    .welcome-banner .carousel-dots {
+        position: relative;
+        z-index: 2;
+    }
+
+    .welcome-content {
+        max-width: 460px;
+    }
+
+    .welcome-content h1 {
+        font-size: 34px;
+        font-weight: 800;
+    }
+
+    .welcome-content p {
+        margin-top: 12px;
+        color: #d1d5db;
+        font-size: 15px;
+    }
+
+    .btn-outline {
+        margin-top: 22px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #2563eb;
+        color: #fff;
+        padding: 11px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .carousel-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.35);
+        color: #fff;
+        border: none;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .carousel-arrow.left { left: 20px; }
+    .carousel-arrow.right { right: 20px; }
+
+    .carousel-dots {
+        position: absolute;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+    }
+
+    .carousel-dots span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    .carousel-dots span.active {
+        background: #fff;
+    }
+
+    /* ============================
+       LOGIN PAGE (split layout)
+       ============================ */
+    .login-page {
+        min-height: 100vh;
+        display: flex;
+    }
+
+    .login-left {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        padding: 40px;
+    }
+
+    .login-logo {
+        max-width: 320px;
+        width: 100%;
+        height: auto;
+    }
+
+    .login-right {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        padding: 40px;
+        margin: 40px 40px 40px 20px;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 380px;
+    }
+
+    .login-card h1 {
+        font-size: 26px;
+        font-weight: 800;
+        color: #0f1f3d;
+        text-align: center;
+    }
+
+    .auth-subtitle {
+        margin-top: 6px;
+        text-align: center;
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .auth-form {
+        margin-top: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .form-group input {
+        padding: 11px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        background: #f3f4f6;
+    }
+
+    .form-group input:focus {
+        border-color: #2563eb;
+        background: #fff;
+    }
+
+    .password-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .password-wrapper input {
+        width: 100%;
+        padding-right: 42px;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 12px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #6b7280;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 13px;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #374151;
+        cursor: pointer;
+    }
+
+    .checkbox-label input {
+        width: 16px;
+        height: 16px;
+        accent-color: #2563eb;
+    }
+
+    .forgot-link {
+        color: #2563eb;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .auth-submit {
+        margin-top: 6px;
+        justify-content: center;
+        width: 100%;
+        border: none;
+    }
+
+    .divider {
+        margin: 26px 0;
+        position: relative;
+        text-align: center;
+    }
+
+    .divider::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #e5e7eb;
+    }
+
+    .divider span {
+        position: relative;
+        background: #fff;
+        padding: 0 12px;
+        font-size: 13px;
+        color: #9ca3af;
+    }
+
+    .oauth-buttons {
+        display: flex;
+        gap: 12px;
+    }
+
+    .oauth-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        background: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        cursor: pointer;
+    }
+
+    .oauth-btn:hover {
+        background: #f9fafb;
+    }
+
+    .auth-footer {
+        margin-top: 22px;
+        text-align: center;
+        font-size: 13px;
+        color: #6b7280;
+    }
+
+    .auth-footer a {
+        color: #2563eb;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    @media (max-width: 800px) {
+        .login-page {
+            flex-direction: column;
+        }
+        .login-left {
+            padding: 24px;
+        }
+        .login-right {
+            margin: 10px 20px 20px 20px;
+        }
+        .login-logo {
+            max-width: 160px;
+        }
+    }
+    .login-left {
+        padding: 24px;
+    }
+    .login-right {
+        margin: 10px 20px 20px 20px;
+    }
+    .login-logo {
+        max-width: 160px;
+    }
+}

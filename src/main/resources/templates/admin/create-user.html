@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Create User</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="register-page">
+    <div class="register-card">
+
+        <h1>Create User Account</h1>
+        <p class="register-subtitle">
+            The user will receive a welcome email with a link to set their password.
+        </p>
+
+        <p th:if="${error}" style="color: red; text-align: center; font-size: 12px; margin-bottom: 15px;" th:text="${error}"></p>
+        <p th:if="${success}" style="color: green; text-align: center; font-size: 12px; margin-bottom: 15px;" th:text="${success}"></p>
+
+        <form th:action="@{/admin/users/create}" method="post">
+
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Enter first name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter email address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="studentNumber">
+                    Student Number <span style="color:#888; font-weight:400;">(optional)</span>
+                </label>
+                <input type="text" id="studentNumber" name="studentNumber" placeholder="Enter student number">
+            </div>
+
+            <button type="submit" class="login-button">Create Account</button>
+
+        </form>
+
+        <p class="create-account" style="margin-top: 15px;">
+            <a href="/admin/users">← Back to User List</a>
+        </p>
+
+    </div>
+</div>
+
+</body>
+</html>
