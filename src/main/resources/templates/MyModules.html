@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Modules - PrepStart</title>
+
+    <script src="https://kit.fontawesome.com/1fa4c3df9c.js"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/css/ModulesStyle.css">
+</head>
+
+<body>
+
+<header>
+
+    <div class="navbar">
+
+        <div class="brand">
+            <div class="brand-symbol">P</div>
+            <div class="brand-name">PrepStart</div>
+        </div>
+
+        <nav>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="/">Home</a>
+                </li>
+
+                <li>
+                    <a href="/dashboard">Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="/modules" class="active">
+                        My modules
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/upload">
+                        Upload Content
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/quiz">
+                        Quiz me
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/progress">
+                        Progress
+                    </a>
+                </li>
+
+                <li class="search-nav-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </li>
+
+                <li class="profile-circle">
+                    <i class="fa-solid fa-circle-user"></i>
+                </li>
+
+                <li class="profile-arrow">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <section class="modules-top-section">
+
+        <h1>MY MODULES</h1>
+
+        <div class="module-actions">
+
+            <button class="action-button search-action">
+                Search
+            </button>
+
+            <button class="action-button">
+                <span>Sort by</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+
+            <button class="action-button">
+                <span>Card view</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section class="module-view">
+
+        <div class="module-grid">
+
+            <a class="module-link"
+               href="/modules/NADF511"
+               th:href="@{/modules/NADF511}">
+
+                <article class="module-card">
+
+                    <div class="module-text">
+
+                        <h2>
+                            Application Development<br>
+                            Foundation (NADF511)
+                        </h2>
+
+                        <p>
+                            School of NAS
+                        </p>
+
+                        <span class="notification-dot"></span>
+
+                    </div>
+
+                    <div class="module-bottom blue-card"></div>
+
+                </article>
+
+            </a>
+
+
+            <a class="module-link" href="#">
+
+                <article class="module-card">
+
+                    <div class="module-text">
+
+                        <h2>
+                            Web Development 1<br>
+                            (NWED511)
+                        </h2>
+
+                        <p>
+                            School of NAS
+                        </p>
+
+                    </div>
+
+                    <div class="module-bottom green-card"></div>
+
+                </article>
+
+            </a>
+
+
+            <a class="module-link" href="#">
+
+                <article class="module-card">
+
+                    <div class="module-text">
+
+                        <h2>
+                            ICT Fundamentals<br>
+                            (NITF511)
+                        </h2>
+
+                        <p>
+                            School of NAS
+                        </p>
+
+                    </div>
+
+                    <div class="module-bottom pink-card"></div>
+
+                </article>
+
+            </a>
+
+
+            <a class="module-link" href="#">
+
+                <article class="module-card">
+
+                    <div class="module-text">
+
+                        <h2>
+                            Core Curriculum 1<br>
+                            (SCOR511)
+                        </h2>
+
+                        <p>
+                            School of NAS
+                        </p>
+
+                    </div>
+
+                    <div class="module-bottom light-blue-card"></div>
+
+                </article>
+
+            </a>
+
+
+            <a class="module-link" href="#">
+
+                <article class="module-card">
+
+                    <div class="module-text">
+
+                        <h2>
+                            Programming 1<br>
+                            (NPRG511)
+                        </h2>
+
+                        <p>
+                            School of NAS
+                        </p>
+
+                    </div>
+
+                    <div class="module-bottom purple-card"></div>
+
+                </article>
+
+            </a>
+
+
+            <a class="module-link" href="#">
+
+                <article class="module-card">
+
+                    <div class="module-text">
+
+                        <h2>
+                            Communication Networks<br>
+                            1 (NCNE512)
+                        </h2>
+
+                        <p>
+                            School of NAS
+                        </p>
+
+                    </div>
+
+                    <div class="module-bottom orange-card"></div>
+
+                </article>
+
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

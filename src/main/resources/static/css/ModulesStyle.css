@@ -1,0 +1,938 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: #2f7fb7;
+    --blue-line: #438eb8;
+    --dark: #18253a;
+    --text: #253349;
+    --grey-border: #c8c8c8;
+    --light-grey: #dedede;
+    --tab-blue: #acd8ef;
+}
+
+html {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+
+    background: #ffffff;
+
+    color: var(--text);
+
+    font-family:
+            "Trebuchet MS",
+            "Segoe UI",
+            Arial,
+            sans-serif;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.navbar {
+    width: 100%;
+    height: 112px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 42px 0 42px;
+
+    background: #ffffff;
+
+    border-bottom: 3px solid var(--blue-line);
+}
+
+
+/* =========================================================
+   SIMPLE PREPSTART BRAND
+========================================================= */
+
+.brand {
+    width: 195px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    line-height: 1;
+}
+
+.brand-symbol {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+
+    background: linear-gradient(
+            145deg,
+            #186bb3,
+            #398bd2
+    );
+
+    font-family: Georgia, serif;
+
+    font-size: 39px;
+    font-weight: bold;
+
+    border-radius: 8px 18px 8px 18px;
+
+    text-shadow:
+            0 2px 2px rgba(0, 0, 0, 0.18);
+}
+
+.brand-name {
+    margin-top: 3px;
+
+    color: #256ca6;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+}
+
+
+/* =========================================================
+   NAV LINKS
+========================================================= */
+
+.navbar nav {
+    flex: 1;
+}
+
+.nav-links {
+    width: 100%;
+
+    list-style: none;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 25px;
+}
+
+.nav-links li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+
+    color: #377dac;
+
+    font-size: 20px;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    transition: 0.15s ease;
+}
+
+.nav-links a:hover {
+    color: #172337;
+}
+
+.nav-links a.active {
+    color: #111927;
+}
+
+
+/* =========================================================
+   SEARCH ICON
+========================================================= */
+
+.search-nav-icon {
+    margin-left: 2px;
+
+    cursor: pointer;
+}
+
+.search-nav-icon i {
+    color: #14223a;
+
+    font-size: 29px;
+}
+
+
+/* =========================================================
+   PROFILE ICON
+========================================================= */
+
+.profile-circle {
+    width: 62px;
+    height: 62px;
+
+    border: 2px solid #397fb2;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+}
+
+.profile-circle i {
+    color: #377fb4;
+
+    font-size: 25px;
+}
+
+.profile-arrow {
+    margin-left: -15px;
+
+    cursor: pointer;
+}
+
+.profile-arrow i {
+    color: #18273d;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   MY MODULES TOP AREA
+========================================================= */
+
+.modules-top-section {
+    width: 100%;
+    height: 180px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 94px;
+
+    border-bottom: 3px solid var(--blue-line);
+
+    background: #ffffff;
+}
+
+.modules-top-section h1 {
+    color: #152136;
+
+    font-size: 34px;
+    font-weight: 800;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   MODULE ACTION BUTTONS
+========================================================= */
+
+.module-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+.action-button {
+    height: 62px;
+
+    min-width: 168px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 22px;
+
+    padding: 0 20px;
+
+    color: #1f2d40;
+
+    background: #ffffff;
+
+    border: 2px solid #25374d;
+
+    border-radius: 11px;
+
+    font-family: inherit;
+
+    font-size: 20px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    box-shadow:
+            0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.action-button i {
+    font-size: 17px;
+}
+
+.search-action {
+    min-width: 170px;
+
+    justify-content: center;
+}
+
+
+/* =========================================================
+   MODULE AREA
+========================================================= */
+
+.module-view {
+    width: calc(100% - 150px);
+
+    min-height: 570px;
+
+    margin: 35px auto 60px auto;
+
+    padding: 55px 64px;
+
+    border: 1px solid #cccccc;
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   MODULE GRID
+========================================================= */
+
+.module-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+            repeat(3, minmax(260px, 1fr));
+
+    column-gap: 82px;
+    row-gap: 68px;
+}
+
+
+/* =========================================================
+   MODULE CARD LINKS
+========================================================= */
+
+.module-link {
+    display: block;
+
+    color: inherit;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   MODULE CARDS
+========================================================= */
+
+.module-card {
+    width: 100%;
+    height: 335px;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #b8b8b8;
+
+    border-radius: 25px;
+
+    cursor: pointer;
+
+    transition:
+            transform 0.15s ease,
+            box-shadow 0.15s ease;
+}
+
+.module-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+            0 7px 18px rgba(0, 0, 0, 0.11);
+}
+
+
+/* =========================================================
+   MODULE TEXT AREA
+========================================================= */
+
+.module-text {
+    width: 100%;
+    height: 164px;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 17px 10px 8px 10px;
+
+    text-align: center;
+}
+
+.module-text h2 {
+    color: #263247;
+
+    font-size: 21px;
+    font-weight: 500;
+
+    line-height: 1.3;
+}
+
+.module-text p {
+    margin-bottom: 3px;
+
+    color: #273448;
+
+    font-size: 21px;
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   MODULE CARD COLOUR AREA
+========================================================= */
+
+.module-bottom {
+    width: 100%;
+    height: 171px;
+}
+
+
+/* Screenshot blue */
+
+.blue-card {
+    background:
+            linear-gradient(
+                    140deg,
+                    #1767a2 0%,
+                    #287fb9 100%
+            );
+}
+
+
+/* Screenshot green */
+
+.green-card {
+    background:
+            linear-gradient(
+                    140deg,
+                    #42ce44 0%,
+                    #4ce051 100%
+            );
+}
+
+
+/* Screenshot pink */
+
+.pink-card {
+    background:
+            linear-gradient(
+                    140deg,
+                    #e7bedb 0%,
+                    #f3d3e9 100%
+            );
+}
+
+
+/* Additional cards */
+
+.light-blue-card {
+    background:
+            linear-gradient(
+                    140deg,
+                    #a7d5e8,
+                    #c8e8f4
+            );
+}
+
+.purple-card {
+    background:
+            linear-gradient(
+                    140deg,
+                    #b5a4da,
+                    #d4c7eb
+            );
+}
+
+.orange-card {
+    background:
+            linear-gradient(
+                    140deg,
+                    #eac395,
+                    #f2d8b7
+            );
+}
+
+
+/* =========================================================
+   RED NOTIFICATION DOT
+========================================================= */
+
+.notification-dot {
+    width: 25px;
+    height: 25px;
+
+    position: absolute;
+
+    right: -12px;
+    bottom: 25px;
+
+    background: #ff453a;
+
+    border-radius: 50%;
+}
+
+
+/* =========================================================
+   SELECTED MODULE PAGE HEADER
+========================================================= */
+
+.details-header {
+    width: 100%;
+    height: 180px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 73px;
+
+    background: white;
+
+    border-bottom: 3px solid var(--blue-line);
+}
+
+.details-header h1 {
+    color: #182338;
+
+    font-size: 39px;
+    font-weight: 800;
+
+    line-height: 1.35;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   UPLOAD CONTENT BUTTON
+========================================================= */
+
+.upload-button {
+    width: 190px;
+    height: 90px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 17px;
+
+    background: #ffffff;
+
+    color: #395777;
+
+    border: 2px solid #2c405a;
+
+    border-radius: 12px;
+
+    font-family: inherit;
+
+    font-size: 20px;
+    font-weight: 500;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    box-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.upload-button i {
+    color: #358ed0;
+
+    font-size: 38px;
+}
+
+
+/* =========================================================
+   BREADCRUMB
+========================================================= */
+
+.breadcrumb {
+    width: 100%;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding-left: 80px;
+
+    color: #4d5667;
+
+    font-size: 17px;
+}
+
+.breadcrumb a {
+    color: #555e6c;
+
+    text-decoration: none;
+}
+
+.breadcrumb i {
+    color: #5d6877;
+
+    font-size: 11px;
+}
+
+.breadcrumb span {
+    color: #315a80;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   CONTENT TYPE TABS
+========================================================= */
+
+.content-tabs {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 15px;
+    margin-bottom: 24px;
+}
+
+.content-tab {
+    min-width: 180px;
+    height: 51px;
+
+    padding: 0 26px;
+
+    background: #dddddd;
+
+    color: #263247;
+
+    border: none;
+
+    font-family: inherit;
+
+    font-size: 22px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.content-tab:hover {
+    background: #d1d1d1;
+}
+
+.selected-tab {
+    background: #acd8ef;
+}
+
+.selected-tab:hover {
+    background: #acd8ef;
+}
+
+
+/* =========================================================
+   MODULE CONTENT SECTION
+========================================================= */
+
+.module-content {
+    width: 100%;
+
+    padding: 0 79px 50px 79px;
+}
+
+
+/* =========================================================
+   TOPIC
+========================================================= */
+
+.topic-heading {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+    margin-bottom: 75px;
+
+    color: #2a3850;
+
+    font-size: 24px;
+}
+
+.topic-heading i {
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   DOCUMENT / RESOURCE CARDS
+========================================================= */
+
+.resource-card {
+    width: 94%;
+    height: 108px;
+
+    margin:
+            0 auto
+            60px auto;
+
+    padding:
+            0
+            42px
+            0
+            46px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #ffffff;
+
+    border: 1px solid #aeb0b2;
+
+    border-radius: 19px;
+}
+
+
+/* =========================================================
+   LEFT SIDE OF DOCUMENT
+========================================================= */
+
+.resource-information {
+    display: flex;
+    align-items: center;
+
+    gap: 58px;
+}
+
+.pdf-icon {
+    color: #bd1717;
+
+    font-size: 39px;
+}
+
+.resource-title {
+    color: #252e3e;
+
+    font-size: 22px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   UPLOADER
+========================================================= */
+
+.resource-uploader {
+    color: #4f5b70;
+
+    font-size: 16px;
+
+    white-space: nowrap;
+}
+
+.resource-uploader strong {
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media screen and (max-width: 1250px) {
+
+    .navbar {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .brand {
+        width: 130px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .nav-links a {
+        font-size: 17px;
+    }
+
+    .module-grid {
+        column-gap: 40px;
+    }
+
+}
+
+
+@media screen and (max-width: 1000px) {
+
+    .module-grid {
+        grid-template-columns:
+                repeat(2, minmax(250px, 1fr));
+    }
+
+    .modules-top-section {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .module-actions {
+        gap: 8px;
+    }
+
+    .action-button {
+        min-width: 130px;
+        font-size: 17px;
+    }
+
+}
+
+
+@media screen and (max-width: 800px) {
+
+    .navbar {
+        height: auto;
+
+        padding: 20px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .brand {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+
+        justify-content: flex-start;
+    }
+
+    .modules-top-section {
+        height: auto;
+
+        min-height: 180px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        justify-content: center;
+
+        gap: 30px;
+
+        padding: 35px;
+    }
+
+    .module-actions {
+        flex-wrap: wrap;
+    }
+
+    .module-view {
+        width: calc(100% - 50px);
+
+        padding: 40px;
+    }
+
+    .module-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .details-header {
+        height: auto;
+
+        min-height: 180px;
+
+        gap: 30px;
+
+        padding: 35px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .breadcrumb {
+        height: auto;
+
+        min-height: 70px;
+
+        padding: 20px 35px;
+
+        flex-wrap: wrap;
+    }
+
+    .content-tabs {
+        flex-wrap: wrap;
+    }
+
+    .module-content {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .resource-card {
+        width: 100%;
+
+        height: auto;
+
+        min-height: 110px;
+
+        padding: 25px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+}
