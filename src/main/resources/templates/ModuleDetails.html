@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Application Development Fundamentals - PrepStart
+  </title>
+
+  <script src="https://kit.fontawesome.com/1fa4c3df9c.js"
+          crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/css/ModulesStyle.css">
+
+</head>
+
+<body>
+
+<header>
+
+  <div class="navbar">
+
+    <div class="brand">
+      <div class="brand-symbol">P</div>
+      <div class="brand-name">PrepStart</div>
+    </div>
+
+    <nav>
+
+      <ul class="nav-links">
+
+        <li>
+          <a href="/">Home</a>
+        </li>
+
+        <li>
+          <a href="/dashboard">
+            Dashboard
+          </a>
+        </li>
+
+        <li>
+          <a href="/modules"
+             th:href="@{/modules}"
+             class="active">
+            My modules
+          </a>
+        </li>
+
+        <li>
+          <a href="/upload">
+            Upload Content
+          </a>
+        </li>
+
+        <li>
+          <a href="/quiz">
+            Quiz me
+          </a>
+        </li>
+
+        <li>
+          <a href="/progress">
+            Progress
+          </a>
+        </li>
+
+        <li class="search-nav-icon">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </li>
+
+        <li class="profile-circle">
+          <i class="fa-solid fa-circle-user"></i>
+        </li>
+
+        <li class="profile-arrow">
+          <i class="fa-solid fa-chevron-down"></i>
+        </li>
+
+      </ul>
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+<main>
+
+  <section class="details-header">
+
+    <h1>
+      Application Development<br>
+      Fundamentals
+    </h1>
+
+    <button class="upload-button">
+
+            <span>
+                Upload<br>
+                Content
+            </span>
+
+      <i class="fa-solid fa-circle-arrow-up"></i>
+
+    </button>
+
+  </section>
+
+
+  <section class="breadcrumb">
+
+    <a href="/modules"
+       th:href="@{/modules}">
+      My modules
+    </a>
+
+    <i class="fa-solid fa-chevron-right"></i>
+
+    <span>
+            Application Development Foundation (NADF511)
+        </span>
+
+  </section>
+
+
+  <section class="content-tabs">
+
+    <button class="content-tab selected-tab">
+      Documents
+    </button>
+
+    <button class="content-tab">
+      FlashCards
+    </button>
+
+    <button class="content-tab">
+      Slides
+    </button>
+
+  </section>
+
+
+  <section class="module-content">
+
+    <div class="topic-heading">
+
+      <i class="fa-solid fa-chevron-down"></i>
+
+      <span>
+                Topic 1: Development
+            </span>
+
+    </div>
+
+
+    <div class="resource-card">
+
+      <div class="resource-information">
+
+        <i class="fa-solid fa-file-pdf pdf-icon"></i>
+
+        <span class="resource-title">
+                    What is Development
+                </span>
+
+      </div>
+
+      <div class="resource-uploader">
+        Uploaded by:
+        <strong>
+          Kamogelo Leeu
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="resource-card">
+
+      <div class="resource-information">
+
+        <i class="fa-solid fa-file-pdf pdf-icon"></i>
+
+        <span class="resource-title">
+                    Counting in binary
+                </span>
+
+      </div>
+
+      <div class="resource-uploader">
+        Uploaded by:
+        <strong>
+          Zisanda Gomo
+        </strong>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+</body>
+</html>
