@@ -1,496 +1,175 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>PrepStart - Progress</title>
-
-    <link rel="stylesheet" th:href="@{/css/progress.css}">
-
-class="navbar">
-
-    <!-- LOGO -->
-
-    <div class="logo">
-
-        <div class="logo-icon">
-            P
-        </div>
-
-        <div class="logo-text">
-            <strong>Prep</strong>Start
-        </div>
-
-    </div>
-
-
-    <!-- NAVIGATION LINKS -->
-
-    <nav class="nav-links">
-
-        <a href="#"
-           class="nav-link">
-            Home
-        </a>
-
-        <a href="/dashboard"
-           class="nav-link">
-            Dashboard
-        </a>
-
-        <a href="/mymodules"
-           class="nav-link">
-            My Modules
-        </a>
-
-        <a href="/uploadcontent"
-           class="nav-link">
-            Upload Content
-        </a>
-
-        <a href="/quizme"
-           class="nav-link">
-            QuizMe
-        </a>
-
-        <a href="/progress"
-           class="nav-link active">
-            Progress
-        </a>
-
+    <title>My Progress - PrepStart</title>
+    <link rel="stylesheet" th:href="@{/css/progress.css}" href="/css/progress.css">
+    <script th:src="@{/js/progress.js}" src="/js/progress.js" defer></script>
+</head>
+<body>
+<header class="navbar">
+    <a class="logo" th:href="@{/}" href="/" aria-label="PrepStart home">
+        <span class="logo-icon">P</span>
+        <span class="logo-text"><strong>Prep</strong>Start</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+        <a th:href="@{/}" href="/" class="nav-link">Home</a>
+        <a th:href="@{/dashboard}" href="/dashboard" class="nav-link">Dashboard</a>
+        <a th:href="@{/modules}" href="/modules" class="nav-link">My Modules</a>
+        <a th:href="@{/uploadcontent}" href="/uploadcontent" class="nav-link">Upload Content</a>
+        <a th:href="@{/quiz-me}" href="/quiz-me" class="nav-link">Quiz Me</a>
+        <a th:href="@{/progress}" href="/progress" class="nav-link active" aria-current="page">Progress</a>
     </nav>
-
-
-    <!-- RIGHT SIDE -->
-
     <div class="nav-right">
-
-        <button class="search-button"
-                type="button">
-
-            <span class="search-icon"></span>
-
-        </button>
-
-
-        <button class="profile-button"
-                type="button">
-
-            <span class="profile-initials">
-                KM
-            </span>
-
-            <span class="dropdown-arrow">
-                ⌄
-            </span>
-
-        </button>
-
+        <span class="profile-initials" th:text="${student.initials}" th:title="${student.email}" title="Your profile">PS</span>
     </div>
-
 </header>
 
-
 <main class="progress-container">
-
-    <!-- PAGE HEADING -->
-
     <div class="page-heading">
-
-        <h1>My Progress</h1>
-
-        <p>
-            Keep track of your learning journey and see how you're improving.
-        </p>
-
+        <div>
+            <p class="eyebrow">YOUR LEARNING DASHBOARD</p>
+            <h1>My Progress</h1>
+            <p>Track your learning and see how your quiz scores change over time.</p>
+        </div>
+        <span class="student-greeting" th:text="|Hi, ${student.firstName}!|">Hi, Student!</span>
     </div>
 
-
-    <!-- PROGRESS SUMMARY -->
-
-    <section class="progress-summary">
-
+    <section class="progress-summary" aria-label="Progress overview">
         <div class="summary-card">
-
-            <div class="summary-icon blue">
-                ✓
-            </div>
-
+            <div class="summary-icon blue" aria-hidden="true">✓</div>
             <div class="summary-content">
-
                 <p>Overall Progress</p>
-
-                <h2 th:text="${overallProgress + '%'}">
-                    0%
-                </h2>
-
-                <span>
-                    Based on your progress
-                </span>
-
+                <h2 th:text="${summary.overallProgress}">—</h2>
+                <span th:text="${summary.topicCount > 0} ? 'Across your module topics' : 'No topics configured yet'">Across your module topics</span>
             </div>
-
         </div>
-
-
         <div class="summary-card">
-
-            <div class="summary-icon purple">
-                📚
-            </div>
-
+            <div class="summary-icon purple" aria-hidden="true">▤</div>
             <div class="summary-content">
-
                 <p>Modules Completed</p>
-
-                <h2>
-                    0/0
-                </h2>
-
-                <span>
-                    No module data yet
-                </span>
-
+                <h2 th:text="${summary.modulesCompleted}">— / 0</h2>
+                <span>Based on topic completion</span>
             </div>
-
         </div>
-
-
         <div class="summary-card">
-
-            <div class="summary-icon green">
-                ✓
-            </div>
-
+            <div class="summary-icon green" aria-hidden="true">✓</div>
             <div class="summary-content">
-
                 <p>Quizzes Completed</p>
-
-                <h2 th:text="${quizCount}">
-                    0
-                </h2>
-
-                <span>
-                    Completed quizzes
-                </span>
-
+                <h2 th:text="${summary.quizCount}">0</h2>
+                <span>Saved completed attempts</span>
             </div>
-
         </div>
-
-
         <div class="summary-card">
-
-            <div class="summary-icon orange">
-                %
-            </div>
-
+            <div class="summary-icon orange" aria-hidden="true">%</div>
             <div class="summary-content">
-
                 <p>Average Score</p>
-
-                <h2 th:text="${averageScore + '%'}">
-                    0%
-                </h2>
-
-                <span>
-                    Across quizzes
-                </span>
-
+                <h2 th:text="${summary.averageScore}">—</h2>
+                <span th:text="|${summary.scoredQuizCount} scored quiz attempt(s)|">0 scored quiz attempts</span>
             </div>
-
         </div>
-
     </section>
 
-
-    <!-- PERFORMANCE TREND -->
-
-    <section class="performance-card">
-
+    <section class="performance-card" aria-labelledby="performance-title">
         <div class="performance-header">
-
             <div>
-
-                <h2>
-                    Performance Trend
-                </h2>
-
-                <p>
-                    Track your quiz performance over time
-                </p>
-
+                <h2 id="performance-title">Performance Trend</h2>
+                <p>Average quiz score per period. Empty dates are not treated as zero scores.</p>
             </div>
-
-
-            <div class="graph-options">
-
-                <button class="active">
-                    Week
-                </button>
-
-                <button>
-                    Month
-                </button>
-
-                <button>
-                    Semester
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="chart-wrapper">
-
-            <div class="y-axis">
-
-                <span>100%</span>
-                <span>80%</span>
-                <span>60%</span>
-                <span>40%</span>
-                <span>20%</span>
-                <span>0%</span>
-
-            </div>
-
-
-            <div class="chart">
-
-                <div class="horizontal-line line-100"></div>
-
-                <div class="horizontal-line line-80"></div>
-
-                <div class="horizontal-line line-60"></div>
-
-                <div class="horizontal-line line-40"></div>
-
-                <div class="horizontal-line line-20"></div>
-
-                <div class="horizontal-line line-0"></div>
-
-
-                <div class="graph-line">
-
-                    <div class="point point-1"></div>
-
-                    <div class="point point-2"></div>
-
-                    <div class="point point-3"></div>
-
-                    <div class="point point-4"></div>
-
-                    <div class="point point-5"></div>
-
-                    <div class="point point-6"></div>
-
-                    <div class="point point-7"></div>
-
+            <div class="graph-toolbar">
+                <div class="graph-options" role="group" aria-label="Time range">
+                    <button type="button" class="active" data-range="week" aria-pressed="true">Week</button>
+                    <button type="button" data-range="month" aria-pressed="false">Month</button>
+                    <button type="button" data-range="semester" aria-pressed="false">Semester</button>
                 </div>
-
-
-                <div class="x-axis">
-
-                    <span>Mon</span>
-
-                    <span>Tue</span>
-
-                    <span>Wed</span>
-
-                    <span>Thu</span>
-
-                    <span>Fri</span>
-
-                    <span>Sat</span>
-
-                    <span>Sun</span>
-
-                </div>
-
+                <label class="chart-picker" for="chartType">
+                    Graph type
+                    <select id="chartType">
+                        <option value="line">Line chart</option>
+                        <option value="bar">Bar chart</option>
+                        <option value="area">Area chart</option>
+                    </select>
+                </label>
             </div>
-
         </div>
-
+        <div class="chart-caption">
+            <span id="chartPeriod">Last 7 days</span>
+            <span id="chartInfo" aria-live="polite">Loading quiz scores...</span>
+        </div>
+        <div class="chart-panel" id="chartPanel">
+            <svg id="progressChart" viewBox="0 0 900 350" role="img"
+                 aria-label="Your quiz performance chart"></svg>
+            <div class="chart-empty" id="chartEmpty" hidden>
+                <span class="empty-glyph" aria-hidden="true">▥</span>
+                <h3>No quiz scores for this period</h3>
+                <p>Complete a quiz and come back to see your progress here.</p>
+                <a th:href="@{/quiz-me}" href="/quiz-me">Take a quiz →</a>
+            </div>
+        </div>
+        <p class="chart-note">Week = last 7 days · Month = last 30 days · Semester = current Jan–Jun or Jul–Dec calendar period.</p>
+        <noscript><p class="notice">Enable JavaScript to use the interactive performance chart. Your summary and module progress still work.</p></noscript>
     </section>
 
-
-    <!-- MODULE PROGRESS -->
-
-    <section class="module-section">
-
+    <section class="module-section" aria-labelledby="module-title">
         <div class="section-title">
-
-            <div>
-
-                <h2>
-                    Module Progress
-                </h2>
-
-                <p>
-                    See how far you've progressed in each module.
-                </p>
-
-            </div>
-
+            <h2 id="module-title">Module Progress</h2>
+            <p>Only modules you are registered for are shown here. Progress comes from tracked topics.</p>
         </div>
-
-
-        <div class="module-grid">
-
-
-            <!-- MODULE 1 -->
-
-            <div class="module-card">
-
+        <div class="module-grid" th:if="${!modules.empty}">
+            <article class="module-card" th:each="module : ${modules}">
                 <div class="module-top">
-
                     <div>
-
-                        <h3>
-                            Module 1
-                        </h3>
-
-                        <p>
-                            Introduction to Computing
-                        </p>
-
+                        <h3 th:text="${module.code}">NDTA631</h3>
+                        <p th:text="${module.name}">Data Analysis and Visualization</p>
                     </div>
-
-                    <strong>
-                        0%
-                    </strong>
-
+                    <strong th:text="${module.percent == null} ? '—' : |${module.percent}%|">—</strong>
                 </div>
-
-
-                <div class="module-progress-bar">
-
-                    <div class="module-progress-fill"
-                         style="width: 0%;">
-                    </div>
-
+                <div class="module-progress-bar" role="progressbar"
+                     th:if="${module.percent != null}"
+                     th:attr="aria-valuenow=${module.percent},aria-valuemin=0,aria-valuemax=100,aria-label=|${module.name} progress|">
+                    <div class="module-progress-fill" th:style="|width: ${module.percent}%;|"></div>
                 </div>
-
-            </div>
-
-
-            <!-- MODULE 2 -->
-
-            <div class="module-card">
-
-                <div class="module-top">
-
-                    <div>
-
-                        <h3>
-                            Module 2
-                        </h3>
-
-                        <p>
-                            Database Systems
-                        </p>
-
-                    </div>
-
-                    <strong>
-                        0%
-                    </strong>
-
-                </div>
-
-
-                <div class="module-progress-bar">
-
-                    <div class="module-progress-fill"
-                         style="width: 0%;">
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- MODULE 3 -->
-
-            <div class="module-card">
-
-                <div class="module-top">
-
-                    <div>
-
-                        <h3>
-                            Module 3
-                        </h3>
-
-                        <p>
-                            Software Development
-                        </p>
-
-                    </div>
-
-                    <strong>
-                        0%
-                    </strong>
-
-                </div>
-
-
-                <div class="module-progress-bar">
-
-                    <div class="module-progress-fill"
-                         style="width: 0%;">
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- MODULE 4 -->
-
-            <div class="module-card">
-
-                <div class="module-top">
-
-                    <div>
-
-                        <h3>
-                            Module 4
-                        </h3>
-
-                        <p>
-                            Information Systems
-                        </p>
-
-                    </div>
-
-                    <strong>
-                        0%
-                    </strong>
-
-                </div>
-
-
-                <div class="module-progress-bar">
-
-                    <div class="module-progress-fill"
-                         style="width: 0%;">
-                    </div>
-
-                </div>
-
-            </div>
-
+                <p class="module-hint" th:if="${module.percent == null}">No topics configured for this module yet.</p>
+                <p class="module-hint" th:if="${module.percent != null}"
+                   th:text="|${module.completedTopics} of ${module.topicCount} topics completed|">0 of 3 topics completed</p>
+                <a class="module-open" th:href="@{/modules/id/{id}(id=${module.id})}" href="/modules">Open module →</a>
+            </article>
         </div>
-
+        <div class="empty-section" th:if="${modules.empty}">
+            <h3>No enrolled modules yet</h3>
+            <p>Once your registrations are added to PrepStart, your modules will appear here.</p>
+        </div>
     </section>
 
+    <section class="history-section" aria-labelledby="history-title">
+        <div class="section-title">
+            <h2 id="history-title">Recent Quiz Attempts</h2>
+            <p>Your latest completed quizzes, taken directly from your saved results.</p>
+        </div>
+        <div class="history-table-wrap" th:if="${!recentAttempts.empty}">
+            <table class="history-table">
+                <thead><tr><th scope="col">Date</th><th scope="col">Quiz</th><th scope="col">Difficulty</th><th scope="col">Result</th><th scope="col">Score</th></tr></thead>
+                <tbody>
+                <tr th:each="attempt : ${recentAttempts}">
+                    <td th:text="${attempt.date}">12 Oct 2026, 09:20</td>
+                    <td th:text="${attempt.module}">NDTA631</td>
+                    <td th:text="${attempt.difficulty}">Medium</td>
+                    <td th:text="${attempt.result}">4 / 5</td>
+                    <td><span class="score-chip" th:classappend="${!attempt.scored} ? 'score-unknown' : ''"
+                              th:text="${attempt.percentLabel}">80%</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="empty-section" th:if="${recentAttempts.empty}">
+            <h3>No quiz attempts recorded yet</h3>
+            <p>Take a quiz to begin building a history of your scores.</p>
+        </div>
+        <p class="history-note" th:if="${summary.unscoredQuizCount > 0}">
+            Some older completed attempts have no recorded question count, so their percentages cannot be calculated reliably.
+        </p>
+    </section>
 </main>
-
 </body>
-
 </html>

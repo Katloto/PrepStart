@@ -1,4 +1,4 @@
-package com.prepstart.repository;
+package com.prepstart.Repository;
 
 import com.prepstart.model.Enrollment;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -3,9 +3,9 @@ package com.prepstart.controller;
 import com.prepstart.model.Content;
 import com.prepstart.model.Enrollment;
 import com.prepstart.model.User;
-import com.prepstart.repository.ContentRepository;
-import com.prepstart.repository.EnrollmentRepository;
-import com.prepstart.repository.UserRepository;
+import com.prepstart.Repository.ContentRepository;
+import com.prepstart.Repository.EnrollmentRepository;
+import com.prepstart.Repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +40,7 @@ public class DashboardController {
         if (user != null) {
 
             List<Enrollment> enrollments =
-                    enrollmentRepository.findByUserId(user.getUserId());
+                    enrollmentRepository.findByUserId(user.getId());
 
             model.addAttribute("courseCount", enrollments.size());
 

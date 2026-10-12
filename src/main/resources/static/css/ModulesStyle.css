@@ -42,3 +42,161 @@ html{width:100%;min-height:100%}body{min-height:100vh;background:#fff;color:var(
 @media(max-width:1350px){.navbar{padding:0 25px}.brand{width:135px}.nav-links{gap:14px}.nav-links a{font-size:16px}.module-grid{gap:34px}.modules-top-section{padding-left:4%;padding-right:4%}}
 @media(max-width:1080px){.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.modules-top-section{flex-direction:column;align-items:flex-start}.module-view{width:calc(100% - 55px)}.navbar{flex-wrap:wrap}.brand{min-height:80px}.navbar nav{flex-basis:100%}.nav-links{justify-content:flex-start;padding:0 0 15px;flex-wrap:wrap}}
 @media(max-width:700px){.module-grid{grid-template-columns:1fr}.module-view{width:calc(100% - 28px);padding:22px}.navbar{padding:10px 20px}.nav-links{gap:15px}.nav-links a{font-size:15px}.modules-top-section{padding:24px}.module-actions{width:100%}.search-shell{width:100%;max-width:100%}.action-button{height:50px;font-size:15px}.details-header{flex-direction:column;align-items:flex-start;padding:25px}.details-header h1{font-size:29px}.breadcrumb{padding:20px 25px}.module-content{padding:0 20px 35px}.topic-heading{font-size:20px;margin-bottom:25px}.resource-card{width:100%;padding:25px;flex-direction:column;align-items:flex-start}.resource-information{gap:20px}.resource-title{font-size:19px}.resource-right{align-items:flex-start;justify-content:flex-start}.content-tab{font-size:17px;min-width:100px;padding:0 16px}.list-view .module-bottom{width:95px}.module-text h2{font-size:19px}}
+
+
+
+.details-header h1 {
+    overflow-wrap: break-word;
+}
+
+.detail-module-code {
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* MODULE DESCRIPTION */
+
+.detail-description {
+    line-height: 1.7;
+    color: #596a80;
+}
+
+/* CONTENT TAB INTERACTIONS */
+
+.content-tab {
+    transition: background-color 0.2s ease;
+}
+
+.content-tab[aria-selected="true"] {
+    background-color: #acd8ef;
+    color: #18253a;
+    font-weight: 600;
+}
+
+.content-tab[aria-selected="false"] {
+    background-color: #dddddd;
+}
+
+.content-tab[aria-selected="false"]:hover {
+    background-color: #cbdce7;
+}
+
+/* RESOURCE CARD INTERACTIONS */
+
+.resource-card {
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.resource-card:hover {
+    border-color: #8cb9d6;
+    box-shadow: 0 4px 14px rgba(32, 85, 125, 0.08);
+}
+
+.resource-information {
+    flex: 1;
+    min-width: 0;
+}
+
+.resource-information > div {
+    min-width: 0;
+}
+
+.resource-title {
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.resource-right {
+    flex-shrink: 0;
+}
+
+/* OPEN DOCUMENT / SLIDES BUTTON */
+
+.resource-open {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+
+    transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease;
+}
+
+.resource-open:hover {
+    background: #d4ebfa;
+    border-color: #549aca;
+}
+
+/* FLASHCARD INTERACTIONS */
+
+.flashcard {
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.flashcard:hover {
+    border-color: #92bcd8;
+}
+
+.flashcard[open] {
+    border-color: #438eb8;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.flashcard summary {
+    line-height: 1.5;
+}
+
+.flashcard summary:hover {
+    color: #1976b4;
+}
+
+/* ACCESSIBILITY */
+
+.content-tab:focus-visible,
+.resource-open:focus-visible,
+.upload-button:focus-visible,
+.flashcard summary:focus-visible {
+    outline: 3px solid #438eb8;
+    outline-offset: 3px;
+}
+
+/* PROFILE INITIALS */
+
+.profile-circle span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-weight: 700;
+    color: #377fb4;
+}
+
+/* RESPONSIVE MODULE CONTENT */
+
+@media screen and (max-width: 800px) {
+
+    .resource-right {
+        width: 100%;
+        justify-content: flex-start;
+        flex-shrink: 1;
+    }
+
+    .resource-open {
+        width: 100%;
+        text-align: center;
+    }
+
+    .content-tab {
+        flex: 1;
+    }
+
+    .details-header h1 {
+        font-size: 30px;
+    }
+}

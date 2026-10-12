@@ -1,72 +1,94 @@
+
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
   <meta charset="UTF-8">
 
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-  <title>
-    Application Development Fundamentals - PrepStart
+  <title th:text="${module.name + ' - PrepStart'}">
+    Module Details - PrepStart
   </title>
 
+  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/1fa4c3df9c.js"
           crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="/css/ModulesStyle.css">
+  <!-- Existing Modules CSS -->
+  <link rel="stylesheet"
+        href="/css/ModulesStyle.css"
+        th:href="@{/css/ModulesStyle.css}">
+
+  <!-- Existing Modules JavaScript -->
+  <script defer
+          src="/js/Modules.js"
+          th:src="@{/js/Modules.js}"></script>
 
 </head>
 
 <body>
 
+<!-- =============================================
+     NAVIGATION
+============================================= -->
+
 <header>
 
   <div class="navbar">
 
-    <div class="brand">
+    <a class="brand" th:href="@{/}" href="/">
+
       <div class="brand-symbol">P</div>
+
       <div class="brand-name">PrepStart</div>
-    </div>
+
+    </a>
 
     <nav>
 
       <ul class="nav-links">
 
         <li>
-          <a href="/">Home</a>
+          <a th:href="@{/}" href="/">
+            Home
+          </a>
         </li>
 
         <li>
-          <a href="/dashboard">
+          <a th:href="@{/dashboard}"
+             href="/dashboard">
             Dashboard
           </a>
         </li>
 
         <li>
-          <a href="/modules"
-             th:href="@{/modules}"
+          <a th:href="@{/modules}"
+             href="/modules"
              class="active">
             My modules
           </a>
         </li>
 
         <li>
-          <a href="/upload">
+          <a th:href="@{/upload}"
+             href="/upload">
             Upload Content
           </a>
         </li>
 
         <li>
-          <a href="/quiz">
+          <a th:href="@{/quiz-me}"
+             href="/quiz-me">
             Quiz me
           </a>
         </li>
 
         <li>
-          <a href="/progress">
+          <a th:href="@{/progress}"
+             href="/progress">
             Progress
           </a>
         </li>
@@ -75,8 +97,13 @@
           <i class="fa-solid fa-magnifying-glass"></i>
         </li>
 
-        <li class="profile-circle">
-          <i class="fa-solid fa-circle-user"></i>
+        <li class="profile-circle"
+            th:title="${student.firstName + ' ' + student.lastName}">
+
+                    <span th:text="${student.initials}">
+                        ST
+                    </span>
+
         </li>
 
         <li class="profile-arrow">
@@ -94,14 +121,32 @@
 
 <main>
 
+  <!-- =============================================
+       SELECTED MODULE HEADER
+  ============================================= -->
+
   <section class="details-header">
 
-    <h1>
-      Application Development<br>
-      Fundamentals
-    </h1>
+    <div>
 
-    <button class="upload-button">
+      <h1 th:text="${module.name}">
+        Application Development Foundations
+      </h1>
+
+      <p class="detail-module-code"
+         th:text="${module.code + ' • ' + module.courseName}">
+
+        NADF511 • Diploma in ICT
+
+      </p>
+
+    </div>
+
+    <!-- Upload for the selected module -->
+
+    <a class="upload-button"
+       th:href="@{/upload(moduleId=${module.id})}"
+       href="/upload">
 
             <span>
                 Upload<br>
@@ -110,99 +155,415 @@
 
       <i class="fa-solid fa-circle-arrow-up"></i>
 
-    </button>
+    </a>
 
   </section>
 
 
+  <!-- =============================================
+       BREADCRUMB
+  ============================================= -->
+
   <section class="breadcrumb">
 
-    <a href="/modules"
-       th:href="@{/modules}">
+    <a th:href="@{/modules}"
+       href="/modules">
+
       My modules
+
     </a>
 
     <i class="fa-solid fa-chevron-right"></i>
 
-    <span>
-            Application Development Foundation (NADF511)
+    <span th:text="${module.name + ' (' + module.code + ')'}">
+
+            Application Development Foundations (NADF511)
+
         </span>
 
   </section>
 
 
-  <section class="content-tabs">
+  <!-- =============================================
+       MODULE DESCRIPTION
+  ============================================= -->
 
-    <button class="content-tab selected-tab">
+  <p class="detail-description"
+     th:if="${module.description != null and !#strings.isEmpty(module.description)}"
+     th:text="${module.description}">
+
+    Module description goes here.
+
+  </p>
+
+
+  <!-- =============================================
+       CONTENT TABS
+  ============================================= -->
+
+  <section class="content-tabs"
+           role="tablist"
+           aria-label="Module resources">
+
+    <!-- DOCUMENTS -->
+
+    <button type="button"
+            class="content-tab selected-tab"
+            id="tab-documents"
+            data-tab="documents"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-documents">
+
       Documents
+
+      <span class="tab-count"
+            th:text="${#lists.size(documents)}">
+                0
+            </span>
+
     </button>
 
-    <button class="content-tab">
+
+    <!-- FLASHCARDS -->
+
+    <button type="button"
+            class="content-tab"
+            id="tab-flashcards"
+            data-tab="flashcards"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-flashcards">
+
       FlashCards
+
+      <span class="tab-count"
+            th:text="${#lists.size(flashcards)}">
+                0
+            </span>
+
     </button>
 
-    <button class="content-tab">
+
+    <!-- SLIDES -->
+
+    <button type="button"
+            class="content-tab"
+            id="tab-slides"
+            data-tab="slides"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-slides">
+
       Slides
+
+      <span class="tab-count"
+            th:text="${#lists.size(slides)}">
+                0
+            </span>
+
     </button>
 
   </section>
 
 
-  <section class="module-content">
+  <!-- =============================================
+       DOCUMENTS SECTION
+  ============================================= -->
+
+  <section class="module-content"
+           id="panel-documents"
+           role="tabpanel"
+           aria-labelledby="tab-documents">
 
     <div class="topic-heading">
 
-      <i class="fa-solid fa-chevron-down"></i>
+      <i class="fa-solid fa-folder-open"></i>
 
       <span>
-                Topic 1: Development
+                Documents uploaded to this module
             </span>
 
     </div>
 
 
-    <div class="resource-card">
+    <!-- NO DOCUMENTS -->
 
-      <div class="resource-information">
+    <div class="empty-state"
+         th:if="${#lists.isEmpty(documents)}">
 
-        <i class="fa-solid fa-file-pdf pdf-icon"></i>
+      <i class="fa-regular fa-file-pdf"></i>
 
-        <span class="resource-title">
-                    What is Development
-                </span>
+      <h2>No documents yet</h2>
 
-      </div>
-
-      <div class="resource-uploader">
-        Uploaded by:
-        <strong>
-          Kamogelo Leeu
-        </strong>
-      </div>
+      <p>
+        Documents uploaded for this module
+        will appear here.
+      </p>
 
     </div>
 
 
-    <div class="resource-card">
+    <!-- DATABASE DOCUMENTS -->
+
+    <article class="resource-card"
+             th:each="res : ${documents}">
 
       <div class="resource-information">
 
-        <i class="fa-solid fa-file-pdf pdf-icon"></i>
+        <i class="fa-solid fa-file-pdf pdf-icon"
+           aria-hidden="true"></i>
 
-        <span class="resource-title">
-                    Counting in binary
+        <div>
+
+          <div class="resource-title"
+               th:text="${res.title}">
+
+            Document title
+
+          </div>
+
+          <span class="resource-type"
+                th:text="${res.kind}">
+
+                        PDF
+
+                    </span>
+
+          <p class="slide-description"
+             th:if="${res.description != null and !#strings.isEmpty(res.description)}"
+             th:text="${res.description}">
+
+            Document description
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="resource-right">
+
+        <!-- UPLOADER -->
+
+        <div class="resource-uploader">
+
+          Uploaded by:
+
+          <strong th:text="${res.author}">
+            PrepStart
+          </strong>
+
+        </div>
+
+
+        <!-- OPEN AND TRACK DOCUMENT -->
+
+        <a class="resource-open"
+           th:if="${res.url != null and !#strings.isEmpty(res.url)}"
+           th:href="@{/resources/open/{id}(id=${res.id})}"
+           target="_blank"
+           rel="noopener noreferrer">
+
+          Open Document
+
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+        </a>
+
+
+        <!-- MISSING FILE -->
+
+        <span class="no-file-link"
+              th:if="${res.url == null or #strings.isEmpty(res.url)}">
+
+                    File unavailable
+
                 </span>
 
       </div>
 
-      <div class="resource-uploader">
-        Uploaded by:
-        <strong>
-          Zisanda Gomo
-        </strong>
-      </div>
+    </article>
+
+  </section>
+
+
+  <!-- =============================================
+       FLASHCARDS SECTION
+  ============================================= -->
+
+  <section class="module-content"
+           id="panel-flashcards"
+           role="tabpanel"
+           aria-labelledby="tab-flashcards"
+           hidden>
+
+    <div class="topic-heading">
+
+      <i class="fa-solid fa-layer-group"></i>
+
+      <span>
+                Flashcards for this module
+            </span>
 
     </div>
+
+
+    <!-- NO FLASHCARDS -->
+
+    <div class="empty-state"
+         th:if="${#lists.isEmpty(flashcards)}">
+
+      <i class="fa-regular fa-clone"></i>
+
+      <h2>No flashcards yet</h2>
+
+      <p>
+        Flashcards generated from content
+        in this module will appear here.
+      </p>
+
+    </div>
+
+
+    <!-- DATABASE FLASHCARDS -->
+
+    <details class="flashcard"
+             th:each="fc : ${flashcards}">
+
+      <summary th:text="${fc.question}">
+        Flashcard Question
+      </summary>
+
+      <p th:text="${fc.answer}">
+        Flashcard Answer
+      </p>
+
+    </details>
+
+  </section>
+
+
+  <!-- =============================================
+       SLIDES SECTION
+  ============================================= -->
+
+  <section class="module-content"
+           id="panel-slides"
+           role="tabpanel"
+           aria-labelledby="tab-slides"
+           hidden>
+
+    <div class="topic-heading">
+
+      <i class="fa-solid fa-images"></i>
+
+      <span>
+                Slides uploaded to this module
+            </span>
+
+    </div>
+
+
+    <!-- NO SLIDES -->
+
+    <div class="empty-state"
+         th:if="${#lists.isEmpty(slides)}">
+
+      <i class="fa-regular fa-images"></i>
+
+      <h2>No slides yet</h2>
+
+      <p>
+        Presentations and generated slides
+        for this module will appear here.
+      </p>
+
+    </div>
+
+
+    <!-- DATABASE SLIDES -->
+
+    <article class="resource-card"
+             th:each="res : ${slides}">
+
+      <div class="resource-information">
+
+        <i class="fa-solid fa-file-powerpoint slide-icon"
+           aria-hidden="true"></i>
+
+        <div>
+
+          <div class="resource-title"
+               th:text="${res.title}">
+
+            Presentation title
+
+          </div>
+
+          <span class="resource-type"
+                th:text="${res.kind}">
+
+                        SLIDES
+
+                    </span>
+
+          <p class="slide-description"
+             th:if="${res.description != null and !#strings.isEmpty(res.description)}"
+             th:text="${res.description}">
+
+            Presentation description
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="resource-right">
+
+        <!-- UPLOADER -->
+
+        <div class="resource-uploader">
+
+          Uploaded by:
+
+          <strong th:text="${res.author}">
+            PrepStart
+          </strong>
+
+        </div>
+
+
+        <!-- OPEN AND TRACK PRESENTATION -->
+
+        <a class="resource-open"
+           th:if="${res.url != null and !#strings.isEmpty(res.url)}"
+           th:href="@{/resources/open/{id}(id=${res.id})}"
+           target="_blank"
+           rel="noopener noreferrer">
+
+          Open Slides
+
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+        </a>
+
+
+        <!-- GENERATED SLIDES WITHOUT A FILE -->
+
+        <span class="no-file-link"
+              th:if="${res.url == null or #strings.isEmpty(res.url)}">
+
+                    No attached presentation file
+
+                </span>
+
+      </div>
+
+    </article>
 
   </section>
 

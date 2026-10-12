@@ -1,7 +1,7 @@
 package com.prepstart.controller;
 
-import com.prepstart.service.QuizMeService;
-import com.prepstart.service.QuizMeService.QuizState;
+import com.prepstart.Service.QuizMeService;
+import com.prepstart.Service.QuizMeService.QuizState;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

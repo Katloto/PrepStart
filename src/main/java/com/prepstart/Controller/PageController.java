@@ -1,4 +1,4 @@
-package com.prepstart.Controller;
+package com.prepstart.controller;
 
 import com.prepstart.Repository.UserRepository;
 import com.prepstart.model.User;

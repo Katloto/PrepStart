@@ -1,6 +1,6 @@
 package com.prepstart.controller;
 
-import com.prepstart.service.ModuleCatalogService;
+import com.prepstart.Service.ModuleCatalogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

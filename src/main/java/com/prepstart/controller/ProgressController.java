@@ -1,79 +1,54 @@
 package com.prepstart.controller;
 
-import com.prepstart.model.Progress;
-import com.prepstart.model.QuizAttempt;
-import com.prepstart.repository.ProgressRepository;
-import com.prepstart.repository.QuizAttemptRepository;
+import com.prepstart.Service.ProgressDashboardService;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import java.security.Principal;
+import java.util.Map;
 
+/** One progress controller only: replace your existing ProgressController.java. */
 @Controller
 public class ProgressController {
 
-    private final ProgressRepository progressRepository;
-    private final QuizAttemptRepository quizAttemptRepository;
+    private final ProgressDashboardService dashboardService;
 
-    public ProgressController(ProgressRepository progressRepository,
-                              QuizAttemptRepository quizAttemptRepository) {
-        this.progressRepository = progressRepository;
-        this.quizAttemptRepository = quizAttemptRepository;
+    public ProgressController(ProgressDashboardService dashboardService) {
+        this.dashboardService = dashboardService;
     }
 
     @GetMapping("/progress")
-    public String progress(Model model) {
-
-        Integer userId = 1;
-
-        List<Progress> progressList =
-                progressRepository.findByUserId(userId);
-
-        List<QuizAttempt> quizAttempts =
-                quizAttemptRepository.findByUserId(userId);
-
-        int overallProgress = 0;
-
-        if (!progressList.isEmpty()) {
-
-            int total = 0;
-
-            for (Progress progress : progressList) {
-                if (progress.getCompletionPercentage() != null) {
-                    total += progress.getCompletionPercentage();
-                }
-            }
-
-            overallProgress = total / progressList.size();
-        }
-
-        int quizCount = quizAttempts.size();
-
-        int averageScore = 0;
-
-        if (!quizAttempts.isEmpty()) {
-
-            int totalScore = 0;
-            int scoredAttempts = 0;
-
-            for (QuizAttempt attempt : quizAttempts) {
-
-                if (attempt.getScore() != null) {
-                    totalScore += attempt.getScore();
-                    scoredAttempts++;
-                }
-            }
-
-            if (scoredAttempts > 0) {
-                averageScore = totalScore / scoredAttempts;
-            }
-        }
-
-        model.addAttribute("overallProgress", overallProgress);
-        model.addAttribute("quizCount", quizCount);
-        model.addAttribute("averageScore", averageScore);
-
+    public String showProgress(Model model, Principal principal) {
+        if (principal == null) return "redirect:/login";
+        Map<String, Object> dashboard = dashboardService.dashboard(emailOf(principal));
+        model.addAllAttributes(dashboard);
         return "progress";
+    }
+
+    /** JSON time series, scoped to the authenticated student, never to a supplied user ID. */
+    @ResponseBody
+    @GetMapping("/progress/chart")
+    public ProgressDashboardService.ChartData chart(
+            @RequestParam(name = "range", defaultValue = "week") String range,
+            Principal principal) {
+        if (principal == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Sign in to see your progress");
+        }
+        return dashboardService.chart(emailOf(principal), range);
+    }
+
+    private String emailOf(Principal principal) {
+        if (principal instanceof Authentication auth && auth.getPrincipal() instanceof OAuth2User oauth) {
+            String email = oauth.getAttribute("email");
+            if (email != null && !email.isBlank()) return email;
+        }
+        return principal.getName();
     }
 }
