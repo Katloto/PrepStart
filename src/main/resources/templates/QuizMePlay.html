@@ -6,17 +6,13 @@
     <title>Practice Quiz | PrepStart</title>
     <link rel="stylesheet" th:href="@{/css/QuizMeStyle.css}" href="/css/QuizMeStyle.css">
     <script th:src="@{/js/QuizMe.js}" src="/js/QuizMe.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
 </head>
 <body>
-<header class="site-header">
-    <a class="brand" href="/" aria-label="PrepStart home"><span class="brand-mark">P<span class="brand-star">✦</span></span><span class="brand-word">Prep<span>Start</span><small>study smarter</small></span></a>
-    <button class="mobile-nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-    <nav class="main-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/dashboard">Dashboard</a><a href="/my-modules">My Modules</a><a href="/upload-content">Upload Content</a><a class="active" th:href="@{/quiz-me}" href="/quiz-me" aria-current="page">QuizMe</a><a href="/progress">Progress</a></nav>
-    <div class="account"><span class="account-avatar">KM</span><span class="account-chevron">⌄</span></div>
-</header>
+<header th:replace="~{fragments/navbar :: navbar('quiz')}"></header>
 <div class="header-rule"></div>
 <main class="page-wrap play-wrap">
-    <div class="breadcrumbs"><a href="/my-modules">Modules</a><span>/</span><a th:href="@{/quiz-me}" href="/quiz-me">QuizMe</a><span>/</span><strong>Practice</strong></div>
+    <div class="breadcrumbs"><a href="/modules">Modules</a><span>/</span><a th:href="@{/quiz-me}" href="/quiz-me">QuizMe</a><span>/</span><strong>Practice</strong></div>
     <div class="practice-topline"><div><span class="eyebrow">LET'S DO THIS</span><h1>Practice <span>Quiz.</span></h1></div><a class="exit-link" th:href="@{/quiz-me}" href="/quiz-me">New quiz ↗</a></div>
     <section class="question-panel">
         <div class="question-meta"><div><span class="question-label" th:text="|QUESTION ${questionNumber} OF ${totalQuestions}|">QUESTION 1 OF 5</span><h2 th:text="${quizType}">Multiple Choice</h2></div><span class="level-pill" th:text="${difficulty}">Medium</span></div>

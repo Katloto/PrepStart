@@ -12,74 +12,12 @@
             crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="/css/ModulesStyle.css">
+    <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
 </head>
 
 <body>
 
-<header>
-
-    <div class="navbar">
-
-        <div class="brand">
-            <div class="brand-symbol">P</div>
-            <div class="brand-name">PrepStart</div>
-        </div>
-
-        <nav>
-
-            <ul class="nav-links">
-
-                <li>
-                    <a href="/">Home</a>
-                </li>
-
-                <li>
-                    <a href="/dashboard">Dashboard</a>
-                </li>
-
-                <li>
-                    <a href="/modules" class="active">
-                        My modules
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/upload">
-                        Upload Content
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/quiz">
-                        Quiz me
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/progress">
-                        Progress
-                    </a>
-                </li>
-
-                <li class="search-nav-icon">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </li>
-
-                <li class="profile-circle">
-                    <i class="fa-solid fa-circle-user"></i>
-                </li>
-
-                <li class="profile-arrow">
-                    <i class="fa-solid fa-chevron-down"></i>
-                </li>
-
-            </ul>
-
-        </nav>
-
-    </div>
-
-</header>
+<header th:replace="~{fragments/navbar :: navbar('modules')}"></header>
 
 
 <main>

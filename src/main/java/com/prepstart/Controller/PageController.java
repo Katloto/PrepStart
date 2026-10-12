@@ -1,51 +1,42 @@
+
 package com.prepstart.controller;
 
-import com.prepstart.Repository.UserRepository;
-import com.prepstart.model.User;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;   // NEW
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
 
-    private final UserRepository userRepository;
-
-    public PageController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
+    // LOGIN PAGE
     @GetMapping("/login")
     public String showLoginPage() {
         return "login";
     }
 
+    // EMAIL VERIFICATION PAGE
     @GetMapping("/verify")
-    public String showVerifyPage(@RequestParam(value = "email", required = false) String email,
-                                 Model model) {
+    public String showVerifyPage(
+            @RequestParam(value = "email", required = false) String email,
+            Model model) {
+
         if (email != null) {
-            model.addAttribute("email", email);   // NEW
+            model.addAttribute("email", email);
         }
+
         return "verify";
     }
 
+    // FORGOT PASSWORD PAGE
     @GetMapping("/forgot-password")
     public String showForgotPasswordPage() {
         return "forgot-password";
     }
 
-
-    @GetMapping("/")
-    public String showHomePage(Authentication authentication, Model model) {
-        String email = authentication.getName();
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if (userOptional.isPresent()) {
-            model.addAttribute("user", userOptional.get());
-        }
-        return "home";
+    // HOME ROUTE - REDIRECT TO DASHBOARD
+    @GetMapping("/home")
+    public String showHomePage() {
+        return "redirect:/dashboard";
     }
 }

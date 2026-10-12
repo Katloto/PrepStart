@@ -5,8 +5,10 @@
     <title>PrepStart - Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
     <link rel="stylesheet" href="/dist/assets/index-Cb-9To41.css" />
+    <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
 </head>
 <body>
+<header th:replace="~{fragments/navbar :: navbar('dashboard')}"></header>
 
 <div class="page-wrapper">
 

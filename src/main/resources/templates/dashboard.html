@@ -5,26 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - PrepStart</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}" href="/css/dashboard.css">
+    <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
 </head>
 <body>
-<header class="navbar">
-    <a class="logo" th:href="@{/}" href="/" aria-label="PrepStart home">
-        <span class="logo-icon">P</span>
-        <span class="logo-text"><strong>Prep</strong>Start</span>
-    </a>
-    <nav class="nav-links" aria-label="Main navigation">
-        <a th:href="@{/}" href="/" class="nav-link">Home</a>
-        <a th:href="@{/dashboard}" href="/dashboard" class="nav-link active" aria-current="page">Dashboard</a>
-        <a th:href="@{/modules}" href="/modules" class="nav-link">My Modules</a>
-        <a th:href="@{/uploadcontent}" href="/uploadcontent" class="nav-link">Upload Content</a>
-        <a th:href="@{/quiz-me}" href="/quiz-me" class="nav-link">QuizMe</a>
-        <a th:href="@{/progress}" href="/progress" class="nav-link">Progress</a>
-    </nav>
-    <div class="nav-right">
-        <span class="profile-initials" th:text="${student.initials}"
-              th:title="${student.email}" title="Signed-in student">PS</span>
-    </div>
-</header>
+<header th:replace="~{fragments/navbar :: navbar('dashboard')}"></header>
 <main class="dashboard-container">
     <section class="welcome-section">
         <div>

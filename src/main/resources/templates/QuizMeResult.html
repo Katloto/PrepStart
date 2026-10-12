@@ -6,17 +6,13 @@
     <title>Quiz Results | PrepStart</title>
     <link rel="stylesheet" th:href="@{/css/QuizMeStyle.css}" href="/css/QuizMeStyle.css">
     <script th:src="@{/js/QuizMe.js}" src="/js/QuizMe.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
 </head>
 <body>
-<header class="site-header">
-    <a class="brand" href="/" aria-label="PrepStart home"><span class="brand-mark">P<span class="brand-star">✦</span></span><span class="brand-word">Prep<span>Start</span><small>study smarter</small></span></a>
-    <button class="mobile-nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-    <nav class="main-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/dashboard">Dashboard</a><a href="/my-modules">My Modules</a><a href="/upload-content">Upload Content</a><a class="active" th:href="@{/quiz-me}" href="/quiz-me" aria-current="page">QuizMe</a><a href="/progress">Progress</a></nav>
-    <div class="account"><span class="account-avatar">KM</span><span class="account-chevron">⌄</span></div>
-</header>
+<header th:replace="~{fragments/navbar :: navbar('quiz')}"></header>
 <div class="header-rule"></div>
 <main class="page-wrap result-wrap">
-    <div class="breadcrumbs"><a href="/my-modules">Modules</a><span>/</span><a th:href="@{/quiz-me}" href="/quiz-me">QuizMe</a><span>/</span><strong>Results</strong></div>
+    <div class="breadcrumbs"><a href="/modules">Modules</a><span>/</span><a th:href="@{/quiz-me}" href="/quiz-me">QuizMe</a><span>/</span><strong>Results</strong></div>
     <section class="results-hero">
         <div class="result-emblem">✦</div><span class="eyebrow">PRACTICE COMPLETE</span><h1>Nice work<span>!</span></h1>
         <p>Every question is a chance to learn. Here's how your session went.</p>
