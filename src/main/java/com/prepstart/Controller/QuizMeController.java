@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/quiz-me")
+@RequestMapping({"/quiz-me", "/quizme"})
 public class QuizMeController {
 
     private static final String QUIZ_KEY = "prepStartQuizMeCurrent";
