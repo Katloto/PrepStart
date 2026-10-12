@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- A single navbar for every authenticated PrepStart page. -->
+<header id="ps-navbar" class="ps-navbar" th:fragment="navbar(activePage)">
+    <a class="ps-logo" th:href="@{/home}" href="/home" aria-label="PrepStart home">
+        <span class="ps-logo-icon">P</span>
+        <span class="ps-logo-text"><strong>Prep</strong>Start</span>
+    </a>
+
+    <nav class="ps-nav-links" aria-label="Main navigation">
+        <a class="ps-nav-link" th:classappend="${activePage == 'home' ? ' active' : ''}"
+           th:attr="aria-current=${activePage == 'home' ? 'page' : null}"
+           th:href="@{/home}" href="/home">Home</a>
+        <a class="ps-nav-link" th:classappend="${activePage == 'dashboard' ? ' active' : ''}"
+           th:attr="aria-current=${activePage == 'dashboard' ? 'page' : null}"
+           th:href="@{/dashboard}" href="/dashboard">Dashboard</a>
+        <a class="ps-nav-link" th:classappend="${activePage == 'modules' ? ' active' : ''}"
+           th:attr="aria-current=${activePage == 'modules' ? 'page' : null}"
+           th:href="@{/modules}" href="/modules">My Modules</a>
+        <a class="ps-nav-link" th:classappend="${activePage == 'upload' ? ' active' : ''}"
+           th:attr="aria-current=${activePage == 'upload' ? 'page' : null}"
+           th:href="@{/uploadcontent}" href="/uploadcontent">Upload Content</a>
+        <a class="ps-nav-link" th:classappend="${activePage == 'quiz' ? ' active' : ''}"
+           th:attr="aria-current=${activePage == 'quiz' ? 'page' : null}"
+           th:href="@{/quiz-me}" href="/quiz-me">QuizMe</a>
+        <a class="ps-nav-link" th:classappend="${activePage == 'progress' ? ' active' : ''}"
+           th:attr="aria-current=${activePage == 'progress' ? 'page' : null}"
+           th:href="@{/progress}" href="/progress">Progress</a>
+    </nav>
+
+    <div class="ps-nav-right">
+        <span class="ps-profile-initials"
+              th:text="${student != null ? student.initials : (user != null ? user.firstName : 'PS')}"
+              th:title="${student != null ? student.email : (user != null ? user.email : 'Signed-in user')}"
+              title="Signed-in user">PS</span>
+    </div>
+</header>
+</body>
+</html>

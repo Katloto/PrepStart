@@ -41,3 +41,5 @@ uploads/
 
 react-frontend/node_modules/
 react-frontend/dist/
+/.prepstart-nav-backup/
+/uploads/
