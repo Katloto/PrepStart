@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMe | PrepStart</title>
+    <link rel="stylesheet" th:href="@{/css/QuizMeStyle.css}" href="/css/QuizMeStyle.css">
+    <script th:src="@{/js/QuizMe.js}" src="/js/QuizMe.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" href="/" aria-label="PrepStart home">
+        <span class="brand-mark">P<span class="brand-star">✦</span></span>
+        <span class="brand-word">Prep<span>Start</span><small>study smarter</small></span>
+    </a>
+    <button class="mobile-nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="main-nav" aria-label="Main navigation">
+        <!-- Adapt the other links to your existing PrepStart routes as needed. -->
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/my-modules">My Modules</a>
+        <a href="/upload-content">Upload Content</a>
+        <a class="active" th:href="@{/quiz-me}" href="/quiz-me" aria-current="page">QuizMe</a>
+        <a href="/progress">Progress</a>
+    </nav>
+    <div class="account" title="Your account"><span class="account-avatar">KM</span><span class="account-chevron">⌄</span></div>
+</header>
+<div class="header-rule"></div>
+
+<main class="page-wrap">
+    <div class="breadcrumbs"><a href="/my-modules">Modules</a><span>/</span><strong>QuizMe</strong></div>
+    <section class="page-heading">
+        <div>
+            <span class="eyebrow">YOUR STUDY SPACE</span>
+            <h1>Quiz<span>Me.</span></h1>
+            <p>Choose your question type and difficulty, then practise with questions from your modules.</p>
+        </div>
+        <div class="study-tag"><span class="study-tag-dot"></span> Practice with PrepStart questions</div>
+    </section>
+
+    <div class="workspace">
+        <section class="setup-panel">
+            <div class="panel-heading">
+                <span class="panel-symbol">✦</span>
+                <div><h2>Set up your quiz</h2><p>Choose a quiz from your existing PrepStart question bank.</p></div>
+            </div>
+            <div class="alert" role="alert" th:if="${error != null}" th:text="${error}">Please try again.</div>
+            <form id="quizSetupForm" th:action="@{/quiz-me/start}" action="/quiz-me/start" method="post">
+                <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <div class="field-group">
+                    <label for="quizType">Quiz Type</label>
+                    <div class="select-shell">
+                        <select id="quizType" name="quizType" required>
+                            <option value="" selected disabled>Select a quiz type</option>
+                            <option value="multiple">Multiple Choice</option>
+                            <option value="truefalse">True / False</option>
+                            <option value="mixed">Mixed Questions</option>
+                        </select>
+                        <span class="select-caret" aria-hidden="true">⌄</span>
+                    </div>
+                    <span class="field-help">Multiple choice, true/false or any available questions.</span>
+                </div>
+                <div class="field-group">
+                    <label for="difficulty">Difficulty level</label>
+                    <div class="select-shell">
+                        <select id="difficulty" name="difficulty" required>
+                            <option value="" selected disabled>Choose your difficulty</option>
+                            <option th:each="level : ${difficulties}" th:value="${level}" th:text="${level}">Easy</option>
+                        </select>
+                        <span class="select-caret" aria-hidden="true">⌄</span>
+                    </div>
+                    <span class="field-help">Start easy or challenge yourself.</span>
+                </div>
+                <button class="primary-btn generate-btn" type="submit"><span aria-hidden="true">✧</span> Generate Quiz <span class="btn-arrow" aria-hidden="true">→</span></button>
+            </form>
+        </section>
+
+        <aside class="inspiration" aria-label="Quiz preview">
+            <div class="inspiration-decoration circle-one"></div>
+            <div class="inspiration-decoration circle-two"></div>
+            <div class="inspiration-content">
+                <div class="quiz-illustration" aria-hidden="true">
+                    <div class="illustration-card back"></div>
+                    <div class="illustration-card front"><span class="illustration-badge">?</span><span class="illustration-line"></span><span class="illustration-line short"></span><span class="illustration-choice">✓</span></div>
+                </div>
+                <span class="illustration-kicker">READY WHEN YOU ARE</span>
+                <h2>Small steps.<br><em>Big progress.</em></h2>
+                <p>Up to five questions from the quiz bank already stored in PrepStart.</p>
+                <div class="mini-stats"><div><strong>05</strong><span>Max questions</span></div><div><strong>03</strong><span>Levels</span></div><div><strong>100%</strong><span>Your pace</span></div></div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="page-footer"><span><span class="footer-sparkle">✦</span> A little practice goes a long way.</span><button class="next-btn" type="submit" form="quizSetupForm">Next <span aria-hidden="true">→</span></button></div>
+</main>
+</body>
+</html>

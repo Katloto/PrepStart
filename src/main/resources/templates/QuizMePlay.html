@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Quiz | PrepStart</title>
+    <link rel="stylesheet" th:href="@{/css/QuizMeStyle.css}" href="/css/QuizMeStyle.css">
+    <script th:src="@{/js/QuizMe.js}" src="/js/QuizMe.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" href="/" aria-label="PrepStart home"><span class="brand-mark">P<span class="brand-star">✦</span></span><span class="brand-word">Prep<span>Start</span><small>study smarter</small></span></a>
+    <button class="mobile-nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="main-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/dashboard">Dashboard</a><a href="/my-modules">My Modules</a><a href="/upload-content">Upload Content</a><a class="active" th:href="@{/quiz-me}" href="/quiz-me" aria-current="page">QuizMe</a><a href="/progress">Progress</a></nav>
+    <div class="account"><span class="account-avatar">KM</span><span class="account-chevron">⌄</span></div>
+</header>
+<div class="header-rule"></div>
+<main class="page-wrap play-wrap">
+    <div class="breadcrumbs"><a href="/my-modules">Modules</a><span>/</span><a th:href="@{/quiz-me}" href="/quiz-me">QuizMe</a><span>/</span><strong>Practice</strong></div>
+    <div class="practice-topline"><div><span class="eyebrow">LET'S DO THIS</span><h1>Practice <span>Quiz.</span></h1></div><a class="exit-link" th:href="@{/quiz-me}" href="/quiz-me">New quiz ↗</a></div>
+    <section class="question-panel">
+        <div class="question-meta"><div><span class="question-label" th:text="|QUESTION ${questionNumber} OF ${totalQuestions}|">QUESTION 1 OF 5</span><h2 th:text="${quizType}">Multiple Choice</h2></div><span class="level-pill" th:text="${difficulty}">Medium</span></div>
+        <div class="progress-track" role="progressbar" th:attr="aria-valuenow=${progressPercent}" aria-valuemin="0" aria-valuemax="100" aria-label="Quiz progress"><div class="progress-fill" th:style="|width: ${progressPercent}%|" style="width:20%"></div></div>
+        <div class="alert" role="alert" th:if="${error != null}" th:text="${error}">Please select an answer.</div>
+        <form id="answerForm" th:action="@{/quiz-me/answer}" action="/quiz-me/answer" method="post">
+            <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <h3 class="question-text" th:text="${question.text()}">What is the purpose of a Java class?</h3>
+            <p class="answer-instruction">Select one answer to continue.</p>
+            <div class="answer-list">
+                <label class="answer-option" th:each="option : ${question.options()}">
+                    <input type="radio" name="answer" th:value="${option.id()}" value="1" required>
+                    <span class="option-letter" th:text="${option.letter()}">A</span>
+                    <span class="option-copy" th:text="${option.text()}">Answer option</span>
+                    <span class="option-check">✓</span>
+                </label>
+            </div>
+        </form>
+    </section>
+    <div class="page-footer"><span><span class="footer-sparkle">✦</span> Take your time. You've got this.</span><button class="next-btn" type="submit" form="answerForm"><span th:text="${lastQuestion} ? 'Finish quiz' : 'Next question'">Next question</span><span aria-hidden="true">→</span></button></div>
+</main>
+</body>
+</html>

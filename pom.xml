@@ -6,6 +6,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+	<!-- Spring Boot Parent -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -13,6 +14,7 @@
 		<relativePath/>
 	</parent>
 
+	<!-- Project Information -->
 	<groupId>com.prepstart</groupId>
 	<artifactId>prepstart</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -20,23 +22,20 @@
 	<name>PrepStart</name>
 	<description>PrepStart academic preparation platform</description>
 
+	<!-- Java Version -->
 	<properties>
 		<java.version>21</java.version>
 	</properties>
 
 	<dependencies>
 
-		<!-- Web / MVC -->
+		<!-- Spring Web / MVC -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
 
-		<!-- Thymeleaf for HTML Views -->
+		<!-- Thymeleaf HTML Templates -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -48,10 +47,16 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-		<!-- Security -->
+		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- Spring Security OAuth2 Client -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security-oauth2-client</artifactId>
 		</dependency>
 
 		<!-- Validation -->
@@ -60,14 +65,20 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
-		<!-- MySQL -->
+		<!-- Spring Boot Mail -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<!-- MySQL Database -->
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- DevTools -->
+		<!-- Spring Boot DevTools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -82,25 +93,30 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- Testing -->
+		<!-- Testing Dependencies -->
+
+		<!-- JPA Testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Security Testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Validation Testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
+		<!-- MVC Testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
@@ -109,6 +125,7 @@
 
 	</dependencies>
 
+	<!-- Build Configuration -->
 	<build>
 
 		<plugins>
@@ -126,9 +143,10 @@
 						</exclude>
 					</excludes>
 				</configuration>
+
 			</plugin>
 
-			<!-- Compiler Plugin -->
+			<!-- Maven Compiler Plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results | PrepStart</title>
+    <link rel="stylesheet" th:href="@{/css/QuizMeStyle.css}" href="/css/QuizMeStyle.css">
+    <script th:src="@{/js/QuizMe.js}" src="/js/QuizMe.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+    <a class="brand" href="/" aria-label="PrepStart home"><span class="brand-mark">P<span class="brand-star">✦</span></span><span class="brand-word">Prep<span>Start</span><small>study smarter</small></span></a>
+    <button class="mobile-nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="main-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/dashboard">Dashboard</a><a href="/my-modules">My Modules</a><a href="/upload-content">Upload Content</a><a class="active" th:href="@{/quiz-me}" href="/quiz-me" aria-current="page">QuizMe</a><a href="/progress">Progress</a></nav>
+    <div class="account"><span class="account-avatar">KM</span><span class="account-chevron">⌄</span></div>
+</header>
+<div class="header-rule"></div>
+<main class="page-wrap result-wrap">
+    <div class="breadcrumbs"><a href="/my-modules">Modules</a><span>/</span><a th:href="@{/quiz-me}" href="/quiz-me">QuizMe</a><span>/</span><strong>Results</strong></div>
+    <section class="results-hero">
+        <div class="result-emblem">✦</div><span class="eyebrow">PRACTICE COMPLETE</span><h1>Nice work<span>!</span></h1>
+        <p>Every question is a chance to learn. Here's how your session went.</p>
+        <div class="score-display"><strong th:text="|${result.percentage()}%|">80%</strong><span th:text="|${result.score()} of ${result.total()} correct|">4 of 5 correct</span></div>
+        <div class="result-tags"><span th:text="${result.typeLabel()}">Multiple Choice</span><span th:text="|${result.difficultyLabel()} difficulty|">Easy difficulty</span></div>
+    </section>
+    <section class="review-section"><div class="review-heading"><h2>Answer review</h2><p>See what you got right and what to revisit.</p></div>
+        <div class="review-card" th:each="item, stat : ${result.reviewItems()}">
+            <div class="review-card-head"><span class="review-num" th:text="|Question ${stat.count}|">Question 1</span><span class="review-status success" th:if="${item.correct()}">✓ Correct</span><span class="review-status retry" th:unless="${item.correct()}">↻ Review</span></div>
+            <h3 th:text="${item.question()}">Question text</h3>
+            <p><span>Your answer:</span> <strong th:text="${item.yourAnswer()}">Answer</strong></p>
+            <p th:unless="${item.correct()}"><span>Correct answer:</span> <strong th:text="${item.correctAnswer()}">Answer</strong></p>
+        </div>
+    </section>
+    <div class="page-footer"><span><span class="footer-sparkle">✦</span> Keep building your confidence.</span><a class="next-btn" th:href="@{/quiz-me}" href="/quiz-me">Try another quiz <span aria-hidden="true">→</span></a></div>
+</main>
+</body>
+</html>
