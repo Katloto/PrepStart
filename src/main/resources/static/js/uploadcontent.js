@@ -92,4 +92,18 @@
     // The browser submits a real multipart POST; no fake upload progress.
   });
   renderModules();
+
+  // Optional deep link from Module Details: /uploadcontent?moduleId=123
+  // The selection is only UI convenience. UploadContentController still verifies
+  // the signed-in user's enrollment and the correct course/module pairing.
+  const requestedModuleId = new URLSearchParams(window.location.search).get('moduleId');
+  if (requestedModuleId && /^\d+$/.test(requestedModuleId)) {
+    const chosen = allModules.find(option => option.value === requestedModuleId);
+    if (chosen) {
+      course.value = chosen.dataset.courseId;
+      renderModules();
+      module.value = requestedModuleId;
+      module.dispatchEvent(new Event('change'));
+    }
+  }
 })();

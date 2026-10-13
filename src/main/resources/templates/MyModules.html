@@ -1,208 +1,92 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>My Modules - PrepStart</title>
-
-    <script src="https://kit.fontawesome.com/1fa4c3df9c.js"
-            crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="/css/ModulesStyle.css">
-    <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Modules | PrepStart</title>
+  <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
+  <link rel="stylesheet" th:href="@{/css/ModulesStyle.css}" href="/css/ModulesStyle.css">
+  <script th:src="@{/js/Modules.js}" src="/js/Modules.js" defer></script>
 </head>
-
 <body>
+  <header th:replace="~{fragments/navbar :: navbar('modules')}"></header>
+  <main class="modules-app">
+    <nav class="modules-breadcrumb" aria-label="Breadcrumb">
+      <a th:href="@{/dashboard}" href="/dashboard">Dashboard</a><span aria-hidden="true">/</span>
+      <span aria-current="page">My Modules</span>
+    </nav>
 
-<header th:replace="~{fragments/navbar :: navbar('modules')}"></header>
-
-
-<main>
-
-    <section class="modules-top-section">
-
-        <h1>MY MODULES</h1>
-
-        <div class="module-actions">
-
-            <button class="action-button search-action">
-                Search
-            </button>
-
-            <button class="action-button">
-                <span>Sort by</span>
-                <i class="fa-solid fa-chevron-down"></i>
-            </button>
-
-            <button class="action-button">
-                <span>Card view</span>
-                <i class="fa-solid fa-chevron-down"></i>
-            </button>
-
-        </div>
-
+    <section class="modules-top-section" aria-labelledby="modulesTitle">
+      <div class="heading-area">
+        <div class="eyebrow"><span class="live-dot"></span> YOUR LEARNING SPACE</div>
+        <h1 id="modulesTitle">My <span>Modules.</span></h1>
+        <p class="section-subtitle">Everything you're enrolled in, all in one place.</p>
+      </div>
+      <div class="modules-summary" aria-label="Enrolled module count">
+        <span class="summary-icon" aria-hidden="true">▦</span>
+        <div><strong th:text="${moduleCount}">8</strong><span>enrolled modules</span></div>
+      </div>
     </section>
 
-
-    <section class="module-view">
-
-        <div class="module-grid">
-
-            <a class="module-link"
-               href="/modules/NADF511"
-               th:href="@{/modules/NADF511}">
-
-                <article class="module-card">
-
-                    <div class="module-text">
-
-                        <h2>
-                            Application Development<br>
-                            Foundation (NADF511)
-                        </h2>
-
-                        <p>
-                            School of NAS
-                        </p>
-
-                        <span class="notification-dot"></span>
-
-                    </div>
-
-                    <div class="module-bottom blue-card"></div>
-
-                </article>
-
-            </a>
-
-
-            <a class="module-link" href="#">
-
-                <article class="module-card">
-
-                    <div class="module-text">
-
-                        <h2>
-                            Web Development 1<br>
-                            (NWED511)
-                        </h2>
-
-                        <p>
-                            School of NAS
-                        </p>
-
-                    </div>
-
-                    <div class="module-bottom green-card"></div>
-
-                </article>
-
-            </a>
-
-
-            <a class="module-link" href="#">
-
-                <article class="module-card">
-
-                    <div class="module-text">
-
-                        <h2>
-                            ICT Fundamentals<br>
-                            (NITF511)
-                        </h2>
-
-                        <p>
-                            School of NAS
-                        </p>
-
-                    </div>
-
-                    <div class="module-bottom pink-card"></div>
-
-                </article>
-
-            </a>
-
-
-            <a class="module-link" href="#">
-
-                <article class="module-card">
-
-                    <div class="module-text">
-
-                        <h2>
-                            Core Curriculum 1<br>
-                            (SCOR511)
-                        </h2>
-
-                        <p>
-                            School of NAS
-                        </p>
-
-                    </div>
-
-                    <div class="module-bottom light-blue-card"></div>
-
-                </article>
-
-            </a>
-
-
-            <a class="module-link" href="#">
-
-                <article class="module-card">
-
-                    <div class="module-text">
-
-                        <h2>
-                            Programming 1<br>
-                            (NPRG511)
-                        </h2>
-
-                        <p>
-                            School of NAS
-                        </p>
-
-                    </div>
-
-                    <div class="module-bottom purple-card"></div>
-
-                </article>
-
-            </a>
-
-
-            <a class="module-link" href="#">
-
-                <article class="module-card">
-
-                    <div class="module-text">
-
-                        <h2>
-                            Communication Networks<br>
-                            1 (NCNE512)
-                        </h2>
-
-                        <p>
-                            School of NAS
-                        </p>
-
-                    </div>
-
-                    <div class="module-bottom orange-card"></div>
-
-                </article>
-
-            </a>
-
+    <section class="module-view" aria-label="My enrolled modules">
+      <div class="module-view-toolbar">
+        <div><span class="section-tag">YOUR CATALOGUE</span><h2>Keep learning.</h2></div>
+        <div class="module-actions" th:if="${not #lists.isEmpty(modules)}">
+          <label class="search-shell" for="moduleSearch">
+            <span aria-hidden="true">⌕</span>
+            <input id="moduleSearch" type="search" placeholder="Search modules or codes" autocomplete="off">
+          </label>
+          <button class="action-button" id="sortModules" type="button" aria-label="Reverse sort order">
+            <span>Sort: A to Z</span><span aria-hidden="true">↕</span>
+          </button>
+          <button class="action-button" id="toggleView" type="button" aria-pressed="false">
+            <span>Card view</span><span aria-hidden="true">▦</span>
+          </button>
         </div>
+      </div>
 
+      <div class="module-meta" th:if="${not #lists.isEmpty(modules)}">
+        <span>Showing modules registered to your account</span>
+        <strong id="searchCount" role="status" aria-live="polite" th:text="|${moduleCount} modules|">8 modules</strong>
+      </div>
+
+      <div class="module-grid" id="moduleGrid" th:if="${not #lists.isEmpty(modules)}">
+        <a class="module-link" th:each="item, stat : ${modules}"
+           th:href="@{/modules/id/{id}(id=${item.id})}" href="/modules"
+           th:attr="data-name=${item.name},data-code=${item.code},data-course=${item.courseName}">
+          <article class="module-card" th:classappend="| accent-${stat.index % 6}|">
+            <div class="module-text">
+              <div class="module-card-top">
+                <span class="module-code" th:text="${item.code}">NPRG621</span>
+                <span class="module-arrow" aria-hidden="true">↗</span>
+              </div>
+              <div class="module-card-icon" aria-hidden="true">▤</div>
+              <h3 th:text="${item.name}">Programming II</h3>
+              <p class="module-course" th:text="${item.courseName}">Diploma in ICT</p>
+            </div>
+            <div class="module-bottom">
+              <div class="module-bottom-copy">
+                <span th:text="|${item.fileCount} uploaded resources|">0 uploaded resources</span>
+                <strong>Explore module <span aria-hidden="true">→</span></strong>
+              </div>
+              <span class="module-decor" aria-hidden="true">✳</span>
+            </div>
+          </article>
+        </a>
+      </div>
+
+      <div class="empty-state" th:if="${#lists.isEmpty(modules)}">
+        <span class="empty-illustration" aria-hidden="true">▦</span>
+        <h2>No registered modules yet</h2>
+        <p>We couldn't find any module enrolments linked to your signed-in account. Your modules will appear here when they're registered in PrepStart.</p>
+        <a class="secondary-link" th:href="@{/dashboard}" href="/dashboard">Back to Dashboard →</a>
+      </div>
+      <div class="empty-state" id="noSearchResults" hidden>
+        <span class="empty-illustration" aria-hidden="true">⌕</span>
+        <h2>No matching modules</h2>
+        <p>Try a different module name or code.</p>
+      </div>
     </section>
-
-</main>
-
+  </main>
 </body>
 </html>
