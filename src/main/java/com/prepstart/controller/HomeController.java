@@ -10,4 +10,10 @@ public class HomeController {
     public String landing() {
         return "landing";
     }
+
+    // Page after a successful form or OAuth2 login.
+    @GetMapping("/home")
+    public String showAuthenticatedHome() {
+        return "home";
+    }
 }

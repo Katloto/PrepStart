@@ -35,8 +35,4 @@ public class PageController {
     }
 
     // HOME ROUTE - REDIRECT TO DASHBOARD
-    @GetMapping("/home")
-    public String showHomePage() {
-        return "redirect:/dashboard";
-    }
 }

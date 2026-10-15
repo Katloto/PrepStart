@@ -18,6 +18,7 @@
     .status[data-status="RETRY"],.status[data-status="WAITING_FOR_KEY"]{background:#fff2d8;color:#895b0b}
     .stats{display:flex;flex-wrap:wrap;gap:13px;margin-top:20px}.stat{background:#f3f8fe;border-radius:9px;padding:10px 14px;font-size:13px;color:#365775}
     .error{color:#a13a3a;font-size:14px;margin:15px 0;line-height:1.5}.hint{font-size:13px;color:#69809a;margin-top:18px}
+    .success-notice{padding:16px 20px;background:#e3f6eb;border:1px solid #a6d8bc;color:#19583c;border-radius:12px;margin:0 0 20px;line-height:1.5}
     .empty{text-align:center;border:2px dashed #bfd6ea;border-radius:17px;padding:54px 20px;color:#607991;background:white}
     a:focus-visible,button:focus-visible{outline:3px solid #3a91dd;outline-offset:2px}
   </style>
@@ -28,12 +29,13 @@
   <h1>AI Study Processing</h1>
   <p class="intro">PrepStart processes uploaded study documents in the background. It extracts selectable text, creates section-by-section notes, PDF revision materials, presentation slides, flashcards and practice questions. Results are AI-generated and must be checked against the source. Scanned/image-only files require OCR.</p>
   <div class="tools"><a th:href="@{/uploadcontent}" href="/uploadcontent">Upload more content</a><a th:href="@{/modules}" href="/modules">View my modules</a><a th:href="@{/ai-study}" href="/ai-study">Refresh statuses</a></div>
+  <div th:if="${uploaded}" class="success-notice" role="status">Your file was uploaded successfully. It is now queued for AI processing. The status below updates automatically; keep this page open to see the results.</div>
   <p th:if="${message}" th:text="${message}"></p>
   <section th:if="${#lists.isEmpty(jobs)}" class="empty">No AI processing jobs yet. Upload a document to get started.</section>
   <article th:each="job:${jobs}" class="job">
     <div class="top">
       <div><h2 th:text="${job.title}">Introduction to Programming</h2><div class="module" th:text="${job.module_code}">NPRG621</div></div>
-      <span class="status" th:attr="data-status=${job.status}" th:text="${job.status}">PENDING</span>
+      <span class="status" th:attr="data-status=${job.status}" th:text="${job.status == 'QUEUED' ? 'QUEUED — waiting for worker' : job.status}">PENDING</span>
     </div>
     <div class="stats">
       <span class="stat"><strong th:text="${job.words_scanned ?: 0}">0</strong> words extracted</span>
@@ -48,7 +50,19 @@
       <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
       <button type="submit" class="retry" th:text="${job.status == 'SKIPPED'} ? 'Process this file' : 'Try again'">Try again</button>
     </form>
+    <p class="hint" th:if="${job.status=='QUEUED' or job.status=='PENDING' or job.status=='PROCESSING'}">Processing runs in the background. This page checks again automatically.</p>
     <p class="hint" th:if="${job.status=='COMPLETED'}">Generated PDFs and slides appear under this module's study materials. Quiz questions are available through QuizMe; flashcards appear in Module Details.</p>
   </article>
 </main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/prepstart-shell.js}" src="/js/prepstart-shell.js" defer></script>
+<script>
+(function () {
+  const liveStatuses = new Set(['QUEUED', 'PENDING', 'PROCESSING', 'RETRY']);
+  const statuses = [...document.querySelectorAll('[data-status]')].map(el => el.dataset.status);
+  if (statuses.some(status => liveStatuses.has(status))) {
+    window.setTimeout(() => { if (!document.hidden) window.location.reload(); }, 8000);
+  }
+})();
+</script>
 </body></html>

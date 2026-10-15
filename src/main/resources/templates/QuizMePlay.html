@@ -34,5 +34,7 @@
     </section>
     <div class="page-footer"><span><span class="footer-sparkle">✦</span> Take your time. You've got this.</span><button class="next-btn" type="submit" form="answerForm"><span th:text="${lastQuestion} ? 'Finish quiz' : 'Next question'">Next question</span><span aria-hidden="true">→</span></button></div>
 </main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+    <script th:src="@{/js/prepstart-shell.js}" src="/js/prepstart-shell.js" defer></script>
 </body>
 </html>

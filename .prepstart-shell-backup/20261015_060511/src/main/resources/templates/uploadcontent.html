@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Upload course notes, assignments, slides and learning resources to PrepStart.">
+  <title>Upload Content | PrepStart</title>
+  <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
+  <link rel="stylesheet" th:href="@{/css/uploadcontent.css}" href="/css/uploadcontent.css">
+  <script th:src="@{/js/uploadcontent.js}" src="/js/uploadcontent.js" defer></script>
+</head>
+<body class="upload-page">
+  <!-- This is the SAME navigation fragment used on Dashboard, QuizMe, My Modules etc. -->
+  <header th:replace="~{fragments/navbar :: navbar('upload')}"></header>
+
+  <main class="up-main">
+    <nav class="up-breadcrumb" aria-label="Breadcrumb">
+      <a href="/dashboard" th:href="@{/dashboard}">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Upload Content</span>
+    </nav>
+
+    <section class="up-hero" aria-labelledby="uploadHeading">
+      <div>
+        <div class="up-eyebrow"><span class="up-dot"></span> SHARE KNOWLEDGE</div>
+        <h1 id="uploadHeading">Upload new content<span class="up-title-dot">.</span></h1>
+        <p>Keep your classmates prepared. Add study materials to the right module, then upload your file securely.</p>
+      </div>
+      <div class="up-hero-accent" aria-hidden="true">
+        <svg viewBox="0 0 100 100" fill="none"><rect x="18" y="27" width="51" height="54" rx="9" stroke="currentColor" stroke-width="4"/><path d="M31 40h26M31 51h26M31 62h18" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M57 17v28M46 28l11-11 11 11" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </section>
+
+    <div class="up-feedback up-feedback-success" th:if="${uploaded}" role="status">
+      <span class="up-feedback-symbol">✓</span>
+      <div><strong>Upload complete!</strong><p>Your material has been saved and is available to authorised students in its module.</p></div>
+    </div>
+    <div class="up-feedback up-feedback-error" th:if="${errorMessage != null}" role="alert">
+      <span class="up-feedback-symbol">!</span><div><strong>Upload not completed</strong><p th:text="${errorMessage}">Please try again.</p></div>
+    </div>
+
+    <div class="up-layout">
+      <section class="up-panel" aria-labelledby="materialDetails">
+        <form id="materialUploadForm" action="/uploadcontent" th:action="@{/uploadcontent}" method="post" enctype="multipart/form-data">
+          <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+          <div class="up-panel-header">
+            <span class="up-step">01</span>
+            <div><h2 id="materialDetails">Material details</h2><p>Tell us what you're sharing and where it belongs.</p></div>
+          </div>
+          <div class="up-form-grid">
+            <div class="up-field">
+              <label for="contentType">Content type <span>*</span></label>
+              <select id="contentType" name="contentType" required>
+                <option value="" selected disabled>Select material type</option>
+                <option value="LECTURE_NOTES">Lecture notes / document</option>
+                <option value="SLIDES">Presentation / slides</option>
+                <option value="PAST_EXAM">Past exam paper</option>
+                <option value="ASSIGNMENT">Assignment / practice</option>
+                <option value="TUTORIAL">Tutorial / study guide</option>
+                <option value="OTHER">Other resources</option>
+              </select>
+            </div>
+            <div class="up-field">
+              <label for="courseId">Course / programme <span>*</span></label>
+              <select id="courseId" name="courseId" required>
+                <option value="" selected disabled>Select a course</option>
+                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.label}" value="">Course</option>
+              </select>
+            </div>
+            <div class="up-field">
+              <label for="moduleId">Module <span>*</span></label>
+              <select id="moduleId" name="moduleId" required disabled>
+                <option value="" selected disabled>Choose a course first</option>
+              </select>
+              <select id="availableModules" hidden aria-hidden="true" tabindex="-1">
+                <option th:each="module : ${modules}" th:value="${module.id}"
+                        th:attr="data-course-id=${module.courseId},data-year=${module.academicYear}"
+                        th:text="${module.label}" value="">Module</option>
+              </select>
+            </div>
+            <div class="up-field">
+              <label for="academicYear">Academic year <span>*</span></label>
+              <input id="academicYear" type="number" name="academicYear"
+                     min="2000" th:max="${currentYear + 1}"
+                     th:value="${currentYear}" value="2026" required>
+            </div>
+            <div class="up-field up-wide">
+              <label for="title">Material title <span>*</span></label>
+              <input id="title" name="title" type="text" required maxlength="150"
+                     placeholder="e.g. Data Analysis – Introduction to Pandas" autocomplete="off">
+              <p class="up-help">Give your classmates a title they'll recognise.</p>
+            </div>
+            <div class="up-field up-wide">
+              <label for="topicOrChapter">Topic or chapter <span class="up-optional">Optional</span></label>
+              <input id="topicOrChapter" name="topicOrChapter" type="text" maxlength="150"
+                     list="topicSuggestions" placeholder="e.g. Chapter 3 – Data Cleaning">
+              <datalist id="topicSuggestions"></datalist>
+              <p class="up-help">After choosing a module, known topics appear as suggestions. You can also type your own chapter name.</p>
+            </div>
+            <div class="up-field up-wide">
+              <label for="description">Description <span class="up-optional">Optional</span></label>
+              <textarea id="description" name="description" maxlength="1800" rows="3"
+                        placeholder="What is covered in this material?"></textarea>
+            </div>
+          </div>
+
+          <div class="up-divider"></div>
+          <div class="up-panel-header up-panel-header-second">
+            <span class="up-step">02</span>
+            <div><h2>Choose your file</h2><p>Your file will be stored privately and shared with permitted PrepStart users.</p></div>
+          </div>
+
+          <div class="up-dropzone" id="uploadDropzone">
+            <input type="file" id="fileInput" name="file"
+                   accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.xls,.xlsx" required>
+            <div class="up-cloud-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none"><path d="M19 47h29a10 10 0 0 0 1-20A17 17 0 0 0 17 24a12 12 0 0 0 2 23Z" stroke="currentColor" stroke-width="3.8" stroke-linejoin="round"/><path d="M32 43V22m-8 8 8-8 8 8" stroke="currentColor" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p class="up-drop-main">Drag and drop your document here</p>
+            <p class="up-drop-sub">or <span>click to browse files</span></p>
+            <div class="up-file-types"><span>PDF</span><span>DOC/DOCX</span><span>PPT/PPTX</span><span>XLS/XLSX</span><span>TXT</span></div>
+            <p class="up-file-limit">Maximum file size: 20 MB</p>
+            <div class="up-picked" id="selectedFile" hidden><span>📄</span><strong id="selectedFileName"></strong><small id="selectedFileSize"></small></div>
+          </div>
+
+          <div class="up-actions">
+            <p class="up-privacy">🔒 Only authorised PrepStart users can download your file.</p>
+            <div class="up-buttons">
+              <button type="reset" class="up-button up-button-secondary">Clear form</button>
+              <button type="submit" class="up-button up-button-primary" id="uploadSubmit" th:disabled="${noModules}">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V3m-5 5 5-5 5 5"/><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>
+                <span id="uploadSubmitText">Upload material</span>
+              </button>
+            </div>
+          </div>
+          <p class="up-no-modules" th:if="${noModules}">No modules are available to you yet. Ask your administrator to enrol you in a module before uploading.</p>
+        </form>
+      </section>
+
+      <aside class="up-sidebar">
+        <section class="up-sidecard up-sidecard-accent" aria-labelledby="sharingTitle">
+          <div class="up-side-icon" aria-hidden="true">✦</div>
+          <h2 id="sharingTitle">Knowledge grows when it's shared.</h2>
+          <p>Your contribution makes revision easier for everyone in your module.</p>
+          <div class="up-side-stats"><span>Secure storage</span><span>•</span><span>Module-based access</span></div>
+        </section>
+        <section class="up-sidecard" aria-labelledby="recentHeading">
+          <div class="up-recent-heading"><h2 id="recentHeading">Your recent uploads</h2><span th:text="${#lists.size(recentUploads)}">0</span></div>
+          <div class="up-empty" th:if="${#lists.isEmpty(recentUploads)}">
+            <div aria-hidden="true">▤</div>
+            <strong>Nothing uploaded yet</strong>
+            <p>Your latest materials will appear here once you've uploaded them.</p>
+          </div>
+          <div class="up-recent-list" th:unless="${#lists.isEmpty(recentUploads)}">
+            <a class="up-recent-item" th:each="item : ${recentUploads}"
+               th:href="${item.fileUrl}" href="#" title="Download your upload">
+              <span class="up-file-square" aria-hidden="true">↓</span>
+              <span class="up-recent-text"><strong th:text="${item.title}">Study guide</strong><small><span th:text="${item.moduleCode}">MODULE</span> · <span th:text="${item.date}">2026-10-12</span></small></span>
+            </a>
+          </div>
+        </section>
+        <section class="up-tip"><strong>Helpful tip</strong><p>Use clear file names and include the module and topic in your material title.</p></section>
+      </aside>
+    </div>
+    <footer class="up-footer">PrepStart · Learn ahead. Share what matters.</footer>
+  </main>
+</body>
+</html>

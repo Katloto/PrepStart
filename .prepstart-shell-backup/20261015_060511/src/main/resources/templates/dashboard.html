@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PrepStart</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" href="/css/dashboard.css">
+    <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
+</head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('dashboard')}"></header>
+<main class="dashboard-container">
+    <section class="welcome-section">
+        <div>
+            <p class="eyebrow">STUDENT DASHBOARD</p>
+            <h1>Welcome back, <span th:text="${student.firstName}">Student</span> <span class="wave" aria-hidden="true">👋</span></h1>
+            <p>Here's what's happening in your learning space.</p>
+        </div>
+        <a class="outline-action" th:href="@{/progress}" href="/progress">See My Progress →</a>
+    </section>
+
+    <section class="statistics" aria-label="Your learning statistics">
+        <a class="stat-card stat-selected" th:href="@{/modules}" href="/modules">
+            <h3>My Modules</h3>
+            <span class="stat-value" th:text="${courseCount}">0</span>
+            <span class="stat-note">Registered modules</span>
+        </a>
+        <div class="stat-card">
+            <h3>Study Materials</h3>
+            <span class="stat-value" th:text="${studyMaterialCount}">0</span>
+            <span class="stat-note">In your modules</span>
+        </div>
+        <a class="stat-card" th:href="@{/progress}" href="/progress">
+            <h3>Quizzes Completed</h3>
+            <span class="stat-value" th:text="${quizCount}">0</span>
+            <span class="stat-note">Saved quiz attempts</span>
+        </a>
+        <a class="stat-card" th:href="@{/progress}" href="/progress">
+            <h3>Average Quiz Score</h3>
+            <span class="stat-value" th:text="${averageScore}">—</span>
+            <span class="stat-note">From scored attempts</span>
+        </a>
+    </section>
+
+    <section class="learning-overview" aria-label="Learning progress overview">
+        <div class="overview-heading">
+            <div><h2>Learning at a glance</h2><p>A quick view of your tracked topic completion</p></div>
+            <a th:href="@{/progress}" href="/progress">Detailed progress →</a>
+        </div>
+        <div class="overview-grid">
+            <div class="overview-score">
+                <span>Overall topic progress</span>
+                <strong th:text="${overallProgress}">—</strong>
+                <small th:text="${summary.topicCount > 0} ? 'Based on tracked topics' : 'No module topics configured yet'">
+                    Based on tracked topics</small>
+                <span class="overview-secondary">Modules completed: <b th:text="${modulesCompleted}">— / 0</b></span>
+            </div>
+            <div class="overview-modules">
+                <div class="mini-module" th:each="module : ${progressHighlights}">
+                    <div class="mini-module-top">
+                        <a th:href="@{/modules/id/{id}(id=${module.id})}" href="/modules"
+                           th:text="${module.code + ' · ' + module.name}">NDTA631 · Data Analysis</a>
+                        <strong th:text="${module.percent == null} ? '—' : |${module.percent}%|">—</strong>
+                    </div>
+                    <div class="mini-track" th:if="${module.percent != null}">
+                        <div class="mini-fill" th:style="|width: ${module.percent}%;|"></div>
+                    </div>
+                    <p th:if="${module.percent == null}">No topics configured for this module yet</p>
+                </div>
+                <p class="nothing-here" th:if="${progressHighlights.empty}">Your registered modules will appear here once available.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="continue-learning" aria-labelledby="continue-title">
+        <div class="continue-learning-header">
+            <h2 id="continue-title" th:text="${materialsAreViewed} ? 'Continue Learning' : 'Explore Learning Materials'">Continue Learning</h2>
+            <a class="view-all" th:href="@{/modules}" href="/modules">View All Modules →</a>
+        </div>
+        <p class="section-description" th:text="${materialsAreViewed} ? 'Materials you recently opened' : 'Latest uploaded materials available in your modules'">
+            Materials you recently opened</p>
+        <div class="dashboard-lower-section">
+            <div class="learning-content">
+                <div class="learning-cards" th:if="${!recentMaterials.empty}">
+                    <article class="learning-card" th:each="material : ${recentMaterials}">
+                        <div class="material-icon" aria-hidden="true">▤</div>
+                        <span class="material-type" th:text="${material.kind}">PDF</span>
+                        <h3 th:text="${material.title}">Study notes</h3>
+                        <div class="material-info">
+                            <span th:text="${material.moduleCode}">NDTA631</span>
+                        </div>
+                        <a class="view-button" th:href="@{/resources/open/{id}(id=${material.id})}"
+                           href="/modules" target="_blank" rel="noopener noreferrer">Open</a>
+                    </article>
+                </div>
+                <div class="learning-empty" th:if="${recentMaterials.empty}">
+                    <span aria-hidden="true">📚</span>
+                    <h3>No learning materials yet</h3>
+                    <p>When files are uploaded to your registered modules, they'll appear here.</p>
+                    <a th:href="@{/modules}" href="/modules">Browse My Modules →</a>
+                </div>
+            </div>
+
+            <aside class="recent-activities" aria-labelledby="recent-title">
+                <h2 id="recent-title">Recent Activities</h2>
+                <div class="activity" th:each="activity : ${recentActivities}">
+                    <a th:href="${activity.link}" href="/progress"
+                       class="activity-title" th:text="${activity.title}">Completed a quiz</a>
+                    <p th:text="${activity.detail}">General quiz</p>
+                    <span th:text="${activity.when}">12 Oct 2026, 11:30</span>
+                </div>
+                <div class="activity-empty" th:if="${recentActivities.empty}">
+                    <p>No activity recorded yet.</p>
+                    <span>Open a study resource or finish a quiz to get started.</span>
+                </div>
+            </aside>
+        </div>
+    </section>
+</main>
+</body>
+</html>

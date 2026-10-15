@@ -38,19 +38,26 @@ public class AiStudyController {
     }
 
     @GetMapping("/ai-study")
-    public String dashboard(Authentication auth, Model model) {
+    public String dashboard(Authentication auth, Model model,
+                            @org.springframework.web.bind.annotation.RequestParam(value="uploaded", required=false) String uploaded) {
         User user = viewer(auth);
+        // Include new uploads immediately, even before the background worker creates a job row.
         List<Map<String,Object>> jobs = jdbc.queryForList("""
-                SELECT j.content_id, c.module_id, c.title, m.code AS module_code, j.status,
+                SELECT c.content_id, c.module_id, c.title, m.code AS module_code,
+                       COALESCE(j.status, 'QUEUED') AS status,
                        j.words_scanned, j.sections_done, j.sections_total, j.generated_files,
                        j.generated_questions, j.generated_flashcards, j.last_error,
                        j.updated_at, j.retry_at
-                  FROM AiProcessingJob j
-                  JOIN Content c ON c.content_id=j.content_id
+                  FROM Content c
                   JOIN `Module` m ON m.module_id=c.module_id
+                  LEFT JOIN AiProcessingJob j ON j.content_id=c.content_id
                  WHERE (?=1 OR c.uploaded_by=?)
-                 ORDER BY j.job_id DESC LIMIT 100
+                   AND c.file_url LIKE '/uploadcontent/file/%'
+                   AND c.file_type IN ('pdf','ppt','pptx','doc','docx','txt','xls','xlsx')
+                   AND (c.content_type IS NULL OR c.content_type <> 'AI_GENERATED')
+                 ORDER BY c.content_id DESC LIMIT 100
                 """, user.admin() ? 1 : 0, user.id());
+        model.addAttribute("uploaded", "1".equals(uploaded));
         model.addAttribute("jobs", jobs);
         return "ai-study";
     }

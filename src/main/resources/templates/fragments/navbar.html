@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<!-- A single navbar for every authenticated PrepStart page. -->
-<header id="ps-navbar" class="ps-navbar" th:fragment="navbar(activePage)">
-    <a class="ps-logo" th:href="@{/home}" href="/home" aria-label="PrepStart home">
-        <span class="ps-logo-icon">P</span>
-        <span class="ps-logo-text"><strong>Prep</strong>Start</span>
-    </a>
-
-    <nav class="ps-nav-links" aria-label="Main navigation">
-        <a class="ps-nav-link" th:classappend="${activePage == 'home' ? ' active' : ''}"
-           th:attr="aria-current=${activePage == 'home' ? 'page' : null}"
-           th:href="@{/home}" href="/home">Home</a>
-        <a class="ps-nav-link" th:classappend="${activePage == 'dashboard' ? ' active' : ''}"
-           th:attr="aria-current=${activePage == 'dashboard' ? 'page' : null}"
-           th:href="@{/dashboard}" href="/dashboard">Dashboard</a>
-        <a class="ps-nav-link" th:classappend="${activePage == 'modules' ? ' active' : ''}"
-           th:attr="aria-current=${activePage == 'modules' ? 'page' : null}"
-           th:href="@{/modules}" href="/modules">My Modules</a>
-        <a class="ps-nav-link" th:classappend="${activePage == 'upload' ? ' active' : ''}"
-           th:attr="aria-current=${activePage == 'upload' ? 'page' : null}"
-           th:href="@{/uploadcontent}" href="/uploadcontent">Upload Content</a>
-        <a class="ps-nav-link" th:classappend="${activePage == 'quiz' ? ' active' : ''}"
-           th:attr="aria-current=${activePage == 'quiz' ? 'page' : null}"
-           th:href="@{/quiz-me}" href="/quiz-me">QuizMe</a>
-        <a class="ps-nav-link" th:classappend="${activePage == 'progress' ? ' active' : ''}"
-           th:attr="aria-current=${activePage == 'progress' ? 'page' : null}"
-           th:href="@{/progress}" href="/progress">Progress</a>
-    </nav>
-
-    <div class="ps-nav-right">
-        <span class="ps-profile-initials"
-              th:text="${student != null ? student.initials : (user != null ? user.firstName : 'PS')}"
-              th:title="${student != null ? student.email : (user != null ? user.email : 'Signed-in user')}"
-              title="Signed-in user">PS</span>
+<!-- Server-rendered port of react-frontend/src/assets/Navbar.jsx.
+     Keeps the same visual structure and interactions without loading React into Thymeleaf. -->
+<header id="ps-navbar" class="ps-navbar navbar" th:fragment="navbar(activePage)">
+  <a class="logo" th:href="@{/home}" href="/home" aria-label="PrepStart Home">
+    <img th:src="@{/images/logo.png}" src="/images/logo.png" alt="PrepStart Logo">
+  </a>
+  <nav class="nav-links" aria-label="Main navigation">
+    <a href="/home" th:href="@{/home}" th:classappend="${activePage == 'home' ? ' active' : ''}">Home</a>
+    <a href="/dashboard" th:href="@{/dashboard}" th:classappend="${activePage == 'dashboard' ? ' active' : ''}">Dashboard</a>
+    <a href="/modules" th:href="@{/modules}" th:classappend="${activePage == 'modules' ? ' active' : ''}">My Modules</a>
+    <a href="/uploadcontent" th:href="@{/uploadcontent}" th:classappend="${activePage == 'upload' ? ' active' : ''}">Upload Content</a>
+    <a href="/quiz-me" th:href="@{/quiz-me}" th:classappend="${activePage == 'quiz' ? ' active' : ''}">QuizMe</a>
+    <a href="/progress" th:href="@{/progress}" th:classappend="${activePage == 'progress' ? ' active' : ''}">Progress</a>
+  </nav>
+  <div class="nav-actions">
+    <div class="search-box" data-search-box>
+      <label class="sr-only" for="ps-search-input">Search PrepStart</label>
+      <input id="ps-search-input" class="search-input" data-search-input type="search" placeholder="Search..." autocomplete="off">
+      <button class="search-button" data-search-toggle type="button" aria-label="Open search" aria-expanded="false" aria-controls="ps-search-input">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+          <line x1="16.65" y1="16.65" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
     </div>
+    <div class="profile-menu" data-profile-menu>
+      <button type="button" class="profile-dropdown-button" data-profile-toggle aria-expanded="false" aria-controls="ps-profile-dropdown" aria-label="Open profile menu">
+        <span class="profile-circle" th:text="${navbarInitial != null ? navbarInitial : 'U'}">U</span>
+        <span class="dropdown-arrow" aria-hidden="true"></span>
+      </button>
+      <div id="ps-profile-dropdown" class="profile-dropdown" data-profile-dropdown hidden>
+        <a href="/profile" th:href="@{/profile}">Profile</a>
+        <a href="/settings" th:href="@{/settings}">Settings</a>
+        <form method="post" th:action="@{/logout}" action="/logout">
+          <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+          <button type="submit" class="ps-logout">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </header>
 </body>
 </html>

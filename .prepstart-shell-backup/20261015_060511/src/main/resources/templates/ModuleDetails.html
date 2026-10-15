@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="|${module.name} • PrepStart|">Module Details | PrepStart</title>
+  <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
+  <link rel="stylesheet" th:href="@{/css/ModulesStyle.css}" href="/css/ModulesStyle.css">
+  <script th:src="@{/js/Modules.js}" src="/js/Modules.js" defer></script>
+</head>
+<body>
+  <header th:replace="~{fragments/navbar :: navbar('modules')}"></header>
+  <main class="modules-app module-details-app">
+    <nav class="modules-breadcrumb" aria-label="Breadcrumb">
+      <a th:href="@{/modules}" href="/modules">My Modules</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page" th:text="${module.code}">NPRG621</span>
+    </nav>
+
+    <section class="details-header">
+      <div>
+        <div class="eyebrow"><span class="live-dot"></span> MODULE LIBRARY</div>
+        <span class="details-chip" th:text="${module.code}">NPRG621</span>
+        <h1 th:text="${module.name}">Programming II</h1>
+        <p class="detail-module-code" th:text="${module.courseName}">Diploma in ICT</p>
+        <p class="detail-description" th:if="${module.description != null and !#strings.isEmpty(module.description)}" th:text="${module.description}">Module description.</p>
+      </div>
+      <a class="upload-button" th:href="@{/uploadcontent(moduleId=${module.id})}" href="/uploadcontent">
+        <span>Upload material<small>Share with this module</small></span><span aria-hidden="true">↗</span>
+      </a>
+    </section>
+
+    <section class="library-shell" aria-label="Module resources">
+      <div class="library-title">
+        <div><span class="section-tag">STUDY MATERIALS</span><h2>Module resources<span>.</span></h2></div>
+        <div class="resource-total"><strong th:text="${resourceCount}">0</strong><span>resources found</span></div>
+      </div>
+      <div class="content-tabs" role="tablist" aria-label="Resource types">
+        <button type="button" class="content-tab selected-tab" id="tab-pdfs" data-tab="pdfs"
+                aria-selected="true" aria-controls="panel-pdfs" role="tab" tabindex="0">
+          PDFs <span class="tab-count" th:text="${#lists.size(pdfs)}">0</span>
+        </button>
+        <button type="button" class="content-tab" id="tab-presentations" data-tab="presentations"
+                aria-selected="false" aria-controls="panel-presentations" role="tab" tabindex="-1">
+          PowerPoints <span class="tab-count" th:text="${#lists.size(presentations)}">0</span>
+        </button>
+        <button type="button" class="content-tab" id="tab-documents" data-tab="documents"
+                aria-selected="false" aria-controls="panel-documents" role="tab" tabindex="-1">
+          Other files <span class="tab-count" th:text="${#lists.size(documents)}">0</span>
+        </button>
+        <button type="button" class="content-tab" id="tab-flashcards" data-tab="flashcards"
+                aria-selected="false" aria-controls="panel-flashcards" role="tab" tabindex="-1">
+          Flashcards <span class="tab-count" th:text="${#lists.size(flashcards)}">0</span>
+        </button>
+      </div>
+
+      <section class="module-content" id="panel-pdfs" role="tabpanel" aria-labelledby="tab-pdfs" tabindex="0">
+        <div class="topic-heading"><span class="type-symbol pdf-symbol">PDF</span><div><h3>PDF documents</h3><p>Notes, learning guides and papers saved as PDF.</p></div></div>
+        <div class="empty-state empty-resources" th:if="${#lists.isEmpty(pdfs)}">
+          <span class="empty-illustration" aria-hidden="true">▤</span><h3>No PDFs uploaded yet</h3>
+          <p>When someone uploads a PDF to this module, it'll appear here.</p>
+        </div>
+        <article class="resource-card" th:each="res : ${pdfs}">
+          <div class="resource-information"><span class="file-icon pdf-symbol" aria-hidden="true">PDF</span><div>
+            <h4 class="resource-title" th:text="${res.title}">Lecture notes</h4>
+            <span class="resource-type" th:text="${res.kind}">PDF</span>
+            <p class="slide-description" th:if="${res.description != null and !#strings.isEmpty(res.description)}" th:text="${res.description}">Description</p>
+          </div></div>
+          <div class="resource-right"><div class="resource-uploader">Uploaded by <strong th:text="${res.author}">PrepStart</strong></div>
+            <a class="resource-open" th:if="${res.available}" th:href="@{/modules/materials/{id}(id=${res.id})}" href="#">Open PDF ↗</a>
+            <span class="no-file-link" th:unless="${res.available}">File unavailable</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="module-content" id="panel-presentations" role="tabpanel" aria-labelledby="tab-presentations" tabindex="0" hidden>
+        <div class="topic-heading"><span class="type-symbol ppt-symbol">PPT</span><div><h3>PowerPoints &amp; slides</h3><p>Presentations saved as PPT or PPTX, plus generated slide records.</p></div></div>
+        <div class="empty-state empty-resources" th:if="${#lists.isEmpty(presentations)}">
+          <span class="empty-illustration" aria-hidden="true">▥</span><h3>No PowerPoints uploaded yet</h3>
+          <p>Presentation files uploaded to this module will appear here.</p>
+        </div>
+        <article class="resource-card" th:each="res : ${presentations}">
+          <div class="resource-information"><span class="file-icon ppt-symbol" aria-hidden="true">PPT</span><div>
+            <h4 class="resource-title" th:text="${res.title}">Lecture slides</h4>
+            <span class="resource-type" th:text="${res.kind}">PPTX</span>
+            <p class="slide-description" th:if="${res.description != null and !#strings.isEmpty(res.description)}" th:text="${res.description}">Description</p>
+          </div></div>
+          <div class="resource-right"><div class="resource-uploader">Uploaded by <strong th:text="${res.author}">PrepStart</strong></div>
+            <a class="resource-open" th:if="${res.available}" th:href="@{/modules/materials/{id}(id=${res.id})}" href="#">Open slides ↗</a>
+            <span class="no-file-link" th:unless="${res.available}">No attached presentation file</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="module-content" id="panel-documents" role="tabpanel" aria-labelledby="tab-documents" tabindex="0" hidden>
+        <div class="topic-heading"><span class="type-symbol doc-symbol">DOC</span><div><h3>Other study files</h3><p>Word, Excel, text documents and other stored material.</p></div></div>
+        <div class="empty-state empty-resources" th:if="${#lists.isEmpty(documents)}">
+          <span class="empty-illustration" aria-hidden="true">▤</span><h3>No other files yet</h3>
+          <p>Other material uploaded to this module will appear here.</p>
+        </div>
+        <article class="resource-card" th:each="res : ${documents}">
+          <div class="resource-information"><span class="file-icon doc-symbol" aria-hidden="true">DOC</span><div>
+            <h4 class="resource-title" th:text="${res.title}">Study material</h4>
+            <span class="resource-type" th:text="${res.kind}">DOCX</span>
+            <p class="slide-description" th:if="${res.description != null and !#strings.isEmpty(res.description)}" th:text="${res.description}">Description</p>
+          </div></div>
+          <div class="resource-right"><div class="resource-uploader">Uploaded by <strong th:text="${res.author}">PrepStart</strong></div>
+            <a class="resource-open" th:if="${res.available}" th:href="@{/modules/materials/{id}(id=${res.id})}" href="#">Open file ↗</a>
+            <span class="no-file-link" th:unless="${res.available}">File unavailable</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="module-content" id="panel-flashcards" role="tabpanel" aria-labelledby="tab-flashcards" tabindex="0" hidden>
+        <div class="topic-heading"><span class="type-symbol flash-symbol">✦</span><div><h3>Flashcards</h3><p>Quick revision questions and answers linked to this module.</p></div></div>
+        <div class="empty-state empty-resources" th:if="${#lists.isEmpty(flashcards)}">
+          <span class="empty-illustration" aria-hidden="true">▧</span><h3>No flashcards yet</h3>
+          <p>Flashcards generated for this module will appear here.</p>
+        </div>
+        <details class="flashcard" th:each="fc, stat : ${flashcards}">
+          <summary><span class="flash-num" th:text="|CARD ${stat.count}|">CARD 1</span><span th:text="${fc.question}">Question?</span><span class="flash-plus" aria-hidden="true">+</span></summary>
+          <div class="flashcard-answer"><span>ANSWER</span><p th:text="${fc.answer}">Answer</p></div>
+        </details>
+      </section>
+    </section>
+    <div class="detail-footer"><a th:href="@{/modules}" href="/modules">← Back to my modules</a></div>
+  </main>
+</body>
+</html>

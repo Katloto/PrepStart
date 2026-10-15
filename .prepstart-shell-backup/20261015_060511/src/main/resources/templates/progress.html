@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Progress - PrepStart</title>
+    <link rel="stylesheet" th:href="@{/css/progress.css}" href="/css/progress.css">
+    <script th:src="@{/js/progress.js}" src="/js/progress.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
+</head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('progress')}"></header>
+
+<main class="progress-container">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">YOUR LEARNING DASHBOARD</p>
+            <h1>My Progress</h1>
+            <p>Track your learning and see how your quiz scores change over time.</p>
+        </div>
+        <span class="student-greeting" th:text="|Hi, ${student.firstName}!|">Hi, Student!</span>
+    </div>
+
+    <section class="progress-summary" aria-label="Progress overview">
+        <div class="summary-card">
+            <div class="summary-icon blue" aria-hidden="true">✓</div>
+            <div class="summary-content">
+                <p>Overall Progress</p>
+                <h2 th:text="${summary.overallProgress}">—</h2>
+                <span th:text="${summary.topicCount > 0} ? 'Across your module topics' : 'No topics configured yet'">Across your module topics</span>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon purple" aria-hidden="true">▤</div>
+            <div class="summary-content">
+                <p>Modules Completed</p>
+                <h2 th:text="${summary.modulesCompleted}">— / 0</h2>
+                <span>Based on topic completion</span>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon green" aria-hidden="true">✓</div>
+            <div class="summary-content">
+                <p>Quizzes Completed</p>
+                <h2 th:text="${summary.quizCount}">0</h2>
+                <span>Saved completed attempts</span>
+            </div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon orange" aria-hidden="true">%</div>
+            <div class="summary-content">
+                <p>Average Score</p>
+                <h2 th:text="${summary.averageScore}">—</h2>
+                <span th:text="|${summary.scoredQuizCount} scored quiz attempt(s)|">0 scored quiz attempts</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="performance-card" aria-labelledby="performance-title">
+        <div class="performance-header">
+            <div>
+                <h2 id="performance-title">Performance Trend</h2>
+                <p>Average quiz score per period. Empty dates are not treated as zero scores.</p>
+            </div>
+            <div class="graph-toolbar">
+                <div class="graph-options" role="group" aria-label="Time range">
+                    <button type="button" class="active" data-range="week" aria-pressed="true">Week</button>
+                    <button type="button" data-range="month" aria-pressed="false">Month</button>
+                    <button type="button" data-range="semester" aria-pressed="false">Semester</button>
+                </div>
+                <label class="chart-picker" for="chartType">
+                    Graph type
+                    <select id="chartType">
+                        <option value="line">Line chart</option>
+                        <option value="bar">Bar chart</option>
+                        <option value="area">Area chart</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="chart-caption">
+            <span id="chartPeriod">Last 7 days</span>
+            <span id="chartInfo" aria-live="polite">Loading quiz scores...</span>
+        </div>
+        <div class="chart-panel" id="chartPanel">
+            <svg id="progressChart" viewBox="0 0 900 350" role="img"
+                 aria-label="Your quiz performance chart"></svg>
+            <div class="chart-empty" id="chartEmpty" hidden>
+                <span class="empty-glyph" aria-hidden="true">▥</span>
+                <h3>No quiz scores for this period</h3>
+                <p>Complete a quiz and come back to see your progress here.</p>
+                <a th:href="@{/quiz-me}" href="/quiz-me">Take a quiz →</a>
+            </div>
+        </div>
+        <p class="chart-note">Week = last 7 days · Month = last 30 days · Semester = current Jan–Jun or Jul–Dec calendar period.</p>
+        <noscript><p class="notice">Enable JavaScript to use the interactive performance chart. Your summary and module progress still work.</p></noscript>
+    </section>
+
+    <section class="module-section" aria-labelledby="module-title">
+        <div class="section-title">
+            <h2 id="module-title">Module Progress</h2>
+            <p>Only modules you are registered for are shown here. Progress comes from tracked topics.</p>
+        </div>
+        <div class="module-grid" th:if="${!modules.empty}">
+            <article class="module-card" th:each="module : ${modules}">
+                <div class="module-top">
+                    <div>
+                        <h3 th:text="${module.code}">NDTA631</h3>
+                        <p th:text="${module.name}">Data Analysis and Visualization</p>
+                    </div>
+                    <strong th:text="${module.percent == null} ? '—' : |${module.percent}%|">—</strong>
+                </div>
+                <div class="module-progress-bar" role="progressbar"
+                     th:if="${module.percent != null}"
+                     th:attr="aria-valuenow=${module.percent},aria-valuemin=0,aria-valuemax=100,aria-label=|${module.name} progress|">
+                    <div class="module-progress-fill" th:style="|width: ${module.percent}%;|"></div>
+                </div>
+                <p class="module-hint" th:if="${module.percent == null}">No topics configured for this module yet.</p>
+                <p class="module-hint" th:if="${module.percent != null}"
+                   th:text="|${module.completedTopics} of ${module.topicCount} topics completed|">0 of 3 topics completed</p>
+                <a class="module-open" th:href="@{/modules/id/{id}(id=${module.id})}" href="/modules">Open module →</a>
+            </article>
+        </div>
+        <div class="empty-section" th:if="${modules.empty}">
+            <h3>No enrolled modules yet</h3>
+            <p>Once your registrations are added to PrepStart, your modules will appear here.</p>
+        </div>
+    </section>
+
+    <section class="history-section" aria-labelledby="history-title">
+        <div class="section-title">
+            <h2 id="history-title">Recent Quiz Attempts</h2>
+            <p>Your latest completed quizzes, taken directly from your saved results.</p>
+        </div>
+        <div class="history-table-wrap" th:if="${!recentAttempts.empty}">
+            <table class="history-table">
+                <thead><tr><th scope="col">Date</th><th scope="col">Quiz</th><th scope="col">Difficulty</th><th scope="col">Result</th><th scope="col">Score</th></tr></thead>
+                <tbody>
+                <tr th:each="attempt : ${recentAttempts}">
+                    <td th:text="${attempt.date}">12 Oct 2026, 09:20</td>
+                    <td th:text="${attempt.module}">NDTA631</td>
+                    <td th:text="${attempt.difficulty}">Medium</td>
+                    <td th:text="${attempt.result}">4 / 5</td>
+                    <td><span class="score-chip" th:classappend="${!attempt.scored} ? 'score-unknown' : ''"
+                              th:text="${attempt.percentLabel}">80%</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="empty-section" th:if="${recentAttempts.empty}">
+            <h3>No quiz attempts recorded yet</h3>
+            <p>Take a quiz to begin building a history of your scores.</p>
+        </div>
+        <p class="history-note" th:if="${summary.unscoredQuizCount > 0}">
+            Some older completed attempts have no recorded question count, so their percentages cannot be calculated reliably.
+        </p>
+    </section>
+</main>
+</body>
+</html>

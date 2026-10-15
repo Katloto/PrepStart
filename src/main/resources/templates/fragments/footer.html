@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Server-rendered port of react-frontend/src/assets/Footer.jsx. -->
+<footer id="ps-footer" class="footer" th:fragment="footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <img th:src="@{/images/logo.png}" src="/images/logo.png" alt="PrepStart Logo">
+      <p>By Students, For Students.</p>
+    </div>
+    <div class="footer-links">
+      <h3>Quick Links</h3>
+      <a href="/home" th:href="@{/home}">Home</a>
+      <a href="/modules" th:href="@{/modules}">My Modules</a>
+      <a href="/uploadcontent" th:href="@{/uploadcontent}">Upload Content</a>
+      <a href="/quiz-me" th:href="@{/quiz-me}">QuizMe</a>
+    </div>
+    <div class="footer-links">
+      <h3>Support</h3>
+      <a href="/help">Help Centre</a>
+      <a href="/contact">Contact Us</a>
+      <a href="/feedback">Feedback</a>
+    </div>
+    <div class="footer-contact">
+      <h3>Contact Us</h3>
+      <p>+27 (0)11 347 2812</p>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>Copyright © 2026 PrepStart. All rights reserved.</p></div>
+</footer>
+</body>
+</html>

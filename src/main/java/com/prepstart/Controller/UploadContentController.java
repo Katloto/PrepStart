@@ -246,7 +246,7 @@ public class UploadContentController {
                 ps.setInt(9, academicYear);
                 return ps;
             });
-            return "redirect:/uploadcontent?uploaded=1";
+            return "redirect:/ai-study?uploaded=1";
         } catch (IOException | DataAccessException ex) {
             if (destination != null) {
                 try { Files.deleteIfExists(destination); } catch (IOException ignored) { }

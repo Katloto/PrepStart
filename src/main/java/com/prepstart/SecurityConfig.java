@@ -78,7 +78,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/login")
 
                         // Successful login goes to Dashboard
-                        .defaultSuccessUrl("/dashboard", true)
+                        .defaultSuccessUrl("/home", true)
 
                         // Failed login returns to login
                         .failureUrl("/login?error=true")
@@ -92,7 +92,7 @@ public class SecurityConfig {
                         .loginPage("/login")
 
                         // Successful OAuth login goes to Dashboard
-                        .defaultSuccessUrl("/dashboard", true)
+                        .defaultSuccessUrl("/home", true)
 
                         .userInfoEndpoint(userInfo -> userInfo
 
