@@ -2,21 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>PrepStart - Dashboard</title>
+    <title>PrepStart - Home</title>
     <link rel="stylesheet" th:href="@{/css/main.css}" />
-    <link rel="stylesheet" href="/dist/assets/index-Cb-9To41.css" />
     <link rel="stylesheet" th:href="@{/css/prepstart-nav.css}" href="/css/prepstart-nav.css">
 </head>
 <body>
-<header th:replace="~{fragments/navbar :: navbar('dashboard')}"></header>
+<header th:replace="~{fragments/navbar :: navbar('home')}"></header>
 
 <div class="page-wrapper">
-
-
-    <div id="react-navbar"
-         th:attr="data-username=${#authentication != null ? #authentication.name : ''}">
-    </div>
-
 
 
 
@@ -54,28 +47,10 @@
         </div>
     </section>
 
-    <div id="react-footer"></div>
 
 </div>
 
 <script>
-    function toggleSearch() {
-        const box = document.getElementById('searchBox');
-        const input = document.getElementById('searchInput');
-        box.classList.toggle('expanded');
-        if (box.classList.contains('expanded')) {
-            input.focus();
-        }
-    }
-
-    document.addEventListener('click', function (event) {
-        const box = document.getElementById('searchBox');
-        const input = document.getElementById('searchInput');
-        if (!box.contains(event.target) && input.value.trim() === '') {
-            box.classList.remove('expanded');
-        }
-    });
-
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.carousel-dots span');
@@ -109,7 +84,6 @@
     resetAutoPlay();
 </script>
 
-<script type="module" crossorigin src="/dist/assets/index-DD7Peopr.js"></script>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
     <script th:src="@{/js/prepstart-shell.js}" src="/js/prepstart-shell.js" defer></script>

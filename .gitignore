@@ -43,3 +43,7 @@ react-frontend/node_modules/
 react-frontend/dist/
 /.prepstart-nav-backup/
 /uploads/
+
+# Local source backups from role routing installer
+.prepstart-admin-backup/
+.prepstart-admin-enrollment-backup/

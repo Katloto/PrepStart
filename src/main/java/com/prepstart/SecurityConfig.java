@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -32,7 +33,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, PrepStartRoleRouting roleRouting) throws Exception {
 
         http
                 // PUBLIC AND PROTECTED PAGES
@@ -61,11 +62,19 @@ public class SecurityConfig {
                                 "/error"
                         ).permitAll()
 
-                        // Administrator pages
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        // OAuth2 authorization and login callback routes
+                        .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
 
-                        // All other pages require login
-                        .anyRequest().authenticated()
+                        // Admin users may access only the admin section.
+                        // Role is resolved from the database, not a hardcoded role ID.
+                        .requestMatchers("/admin", "/admin/**")
+                        .access((authentication, context) -> new AuthorizationDecision(
+                                roleRouting.isRole(authentication.get(), "ADMIN")))
+
+                        // The remainder of the protected application is for students.
+                        // Admins cannot open /home, /dashboard, /modules, etc. by URL.
+                        .anyRequest().access((authentication, context) -> new AuthorizationDecision(
+                                roleRouting.isRole(authentication.get(), "STUDENT")))
                 )
 
                 // NORMAL EMAIL AND PASSWORD LOGIN
@@ -77,8 +86,8 @@ public class SecurityConfig {
                         // Login form submission
                         .loginProcessingUrl("/login")
 
-                        // Successful login goes to Dashboard
-                        .defaultSuccessUrl("/home", true)
+                        // Redirect according to the role stored in PrepStart
+                        .successHandler(roleRouting)
 
                         // Failed login returns to login
                         .failureUrl("/login?error=true")
@@ -91,8 +100,8 @@ public class SecurityConfig {
 
                         .loginPage("/login")
 
-                        // Successful OAuth login goes to Dashboard
-                        .defaultSuccessUrl("/home", true)
+                        // Redirect Google/Microsoft sign-ins according to role
+                        .successHandler(roleRouting)
 
                         .userInfoEndpoint(userInfo -> userInfo
 

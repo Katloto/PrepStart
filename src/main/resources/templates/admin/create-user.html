@@ -1,57 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin - Create User</title>
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-
-<div class="register-page">
-    <div class="register-card">
-
-        <h1>Create User Account</h1>
-        <p class="register-subtitle">
-            The user will receive a welcome email with a link to set their password.
-        </p>
-
-        <p th:if="${error}" style="color: red; text-align: center; font-size: 12px; margin-bottom: 15px;" th:text="${error}"></p>
-        <p th:if="${success}" style="color: green; text-align: center; font-size: 12px; margin-bottom: 15px;" th:text="${success}"></p>
-
-        <form th:action="@{/admin/users/create}" method="post">
-
-            <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Enter first name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" name="lastName" placeholder="Enter last name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="Enter email address" required>
-            </div>
-
-            <div class="form-group">
-                <label for="studentNumber">
-                    Student Number <span style="color:#888; font-weight:400;">(optional)</span>
-                </label>
-                <input type="text" id="studentNumber" name="studentNumber" placeholder="Enter student number">
-            </div>
-
-            <button type="submit" class="login-button">Create Account</button>
-
-        </form>
-
-        <p class="create-account" style="margin-top: 15px;">
-            <a href="/admin/users">← Back to User List</a>
-        </p>
-
-    </div>
-</div>
-
-</body>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PrepStart Admin · Create student</title><link rel="stylesheet" th:href="@{/css/admin-console.css}" href="/css/admin-console.css"></head>
+<body><div class="admin-shell">
+<aside class="admin-sidebar"><a class="brand" th:href="@{/admin/users}"><img th:src="@{/images/logo.png}" src="/images/logo.png" alt="PrepStart"><span>PrepStart<small>ADMIN CONSOLE</small></span></a><div class="sidebar-caption">WORKSPACE</div><nav><a class="nav-item" th:href="@{/admin/users}"><span class="nav-symbol">▦</span>User management</a><a class="nav-item active" th:href="@{/admin/users/create}"><span class="nav-symbol">＋</span>Create student</a></nav><div class="sidebar-bottom"><div class="sidebar-user"><span class="avatar">A</span><span>Administrator<small>Secure workspace</small></span></div><form th:action="@{/logout}" method="post"><button class="nav-logout">↪ &nbsp; Sign out</button></form></div></aside>
+<main class="admin-main"><header class="topline"><span><a class="breadcrumb-link" th:href="@{/admin/users}">Administration / Users</a><span class="crumb"> / Create student</span></span><span class="topline-tag">New account</span></header><section class="heading-row"><div><div class="eyebrow">ACCOUNT MANAGEMENT</div><h1>Create student</h1><p class="subtitle">Register a student, then assign their university, course and modules from User Management.</p></div><a class="button button-secondary" th:href="@{/admin/users}">← All users</a></section>
+<div class="flash success" th:if="${success}" th:text="${success}"></div><div class="flash error" th:if="${error}" th:text="${error}"></div>
+<section class="panel content-pad create-panel"><div class="step-number">NEW STUDENT</div><h2>Account information</h2><p class="field-hint">A new account will be given the Student role. PrepStart's existing email service will send the initial credentials.</p>
+<form th:action="@{/admin/users/create}" method="post" class="create-form"><div class="field"><label for="firstName">First name</label><input id="firstName" name="firstName" required maxlength="100" autocomplete="given-name" placeholder="e.g. Lerato"></div><div class="field"><label for="lastName">Last name</label><input id="lastName" name="lastName" required maxlength="100" autocomplete="family-name" placeholder="e.g. Mokoena"></div><div class="field span-two"><label for="email">Email address</label><input id="email" type="email" name="email" required maxlength="255" autocomplete="off" placeholder="student@university.ac.za"></div><div class="form-actions"><button class="button button-primary" type="submit">+ Create student account</button><a class="button button-secondary" th:href="@{/admin/users}">Cancel</a></div></form>
+</section><footer class="admin-footer">Once created, return to User Management and select “Manage enrollment” for that student.</footer></main>
+</div></body>
 </html>

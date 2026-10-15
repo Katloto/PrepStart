@@ -50,8 +50,15 @@ public class UserService {
         user.setEmailVerified(true);
         user.setStatus("active");
 
-        // 3. Assign STUDENT role
-        roleRepository.findById(1).ifPresent(user::setRole);
+        // 3. Assign STUDENT by role NAME, never assume role_id = 1.
+        // An absent Student role is a setup problem; do not create an unassigned user.
+        user.setRole(roleRepository.findAll().stream()
+                .filter(role -> role.getName() != null &&
+                        ("Student".equalsIgnoreCase(role.getName().trim()) ||
+                         "ROLE_STUDENT".equalsIgnoreCase(role.getName().trim())))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(
+                        "Student role not found in Role table. Create the Student role first.")));
 
         // 4. Save
         User saved = userRepository.save(user);
@@ -59,13 +66,7 @@ public class UserService {
         // 5. Email the credentials to the student
         emailService.sendCredentialsEmail(email, firstName, email, plainPassword);
 
-        // 6. Print to console (admin backup if email fails)
-        System.out.println("==============================================");
-        System.out.println(" ACCOUNT CREATED");
-        System.out.println("   Email:    " + email);
-        System.out.println("   Password: " + plainPassword);
-        System.out.println("   Credentials emailed to student.");
-        System.out.println("==============================================");
+        // Password delivery is handled by emailService. Do not print credentials.
 
         return saved;
     }

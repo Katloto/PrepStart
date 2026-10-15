@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>PrepStart Admin · Student enrollment</title>
+    <link rel="stylesheet" th:href="@{/css/admin-console.css}" href="/css/admin-console.css">
+</head>
+<body>
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <a class="brand" th:href="@{/admin/users}"><img th:src="@{/images/logo.png}" src="/images/logo.png" alt="PrepStart"><span>PrepStart<small>ADMIN CONSOLE</small></span></a>
+        <div class="sidebar-caption">WORKSPACE</div>
+        <nav aria-label="Admin navigation"><a class="nav-item active" th:href="@{/admin/users}"><span class="nav-symbol">▦</span>User management</a><a class="nav-item" th:href="@{/admin/users/create}"><span class="nav-symbol">＋</span>Create student</a></nav>
+        <div class="sidebar-bottom"><div class="sidebar-user"><span class="avatar">A</span><span>Administrator<small>Secure workspace</small></span></div><form th:action="@{/logout}" method="post"><button class="nav-logout">↪ &nbsp; Sign out</button></form></div>
+    </aside>
+    <main class="admin-main">
+        <header class="topline"><span><a th:href="@{/admin/users}" class="breadcrumb-link">Administration / Users</a> <span class="crumb">/ Enrollment</span></span><span class="topline-tag">Student records</span></header>
+        <div class="heading-row"><div><div class="eyebrow">STUDENT ACADEMIC RECORD</div><h1>Manage enrollment</h1><p class="subtitle">University → Course → Modules. All changes are saved to MySQL.</p></div><a class="button button-secondary" th:href="@{/admin/users}">← Back to users</a></div>
+        <div class="flash success" th:if="${success}" th:text="${success}"></div>
+        <div class="flash error" th:if="${error}" th:text="${error}"></div>
+        <section class="student-banner"><div class="student-identity"><div class="profile-avatar" th:text="${#strings.substring(student.firstName,0,1)}">S</div><div><h2 th:text="${student.firstName + ' ' + student.lastName}">Student</h2><p th:text="${student.email}">student@example.com</p></div></div><div class="identity-extra"><span class="pill pill-student">Student</span><small th:text="'University: ' + ${student.universityName}">University: not assigned</small></div></section>
+        <div class="form-grid">
+            <section class="panel content-pad">
+                <div class="step-number">STEP 01</div><h2>Assign university</h2><p class="field-hint">Choose the student's institution. This updates <code>User.university_id</code>.</p>
+                <form th:action="@{/admin/users/{id}/university(id=${student.userId})}" method="post" class="inline-form">
+                    <label for="universityId">University</label>
+                    <select id="universityId" name="universityId" required><option value="" disabled th:selected="${student.universityId == null}">Select a university</option><option th:each="v : ${universities}" th:value="${v.id}" th:selected="${student.universityId != null and student.universityId == v.id}" th:text="${v.name}">University</option></select>
+                    <button class="button button-primary" type="submit">Save university</button>
+                </form>
+                <p class="field-hint" th:if="${universities.isEmpty()}">No universities found. Add university records to the University table first.</p>
+            </section>
+            <section class="panel content-pad">
+                <div class="step-number">STEP 02</div><h2>Enroll in course</h2><p class="field-hint">Enrolling in a course adds all its current modules to the student's existing module registrations. No new database tables are needed.</p>
+                <form th:action="@{/admin/users/{id}/courses(id=${student.userId})}" method="post" class="inline-form">
+                    <label for="courseId">Course / programme</label>
+                    <select id="courseId" name="courseId" required th:disabled="${student.universityId == null or courses.isEmpty()}"><option value="" disabled selected>Select a course</option><option th:each="c : ${courses}" th:value="${c.id}" th:text="${c.code + ' · ' + c.name + ' (' + c.moduleCount + ' modules)'}">Course</option></select>
+                    <button class="button button-primary" type="submit" th:disabled="${student.universityId == null or courses.isEmpty()}">Enroll in course</button>
+                </form>
+                <p class="field-hint" th:if="${student.universityId == null}">Assign a university first to see available courses.</p>
+                <p class="field-hint" th:if="${student.universityId != null and courses.isEmpty()}">No courses exist for this university yet.</p>
+            </section>
+            <section class="panel content-pad span-two">
+                <div class="step-number">STEP 03</div><h2>Enroll in module</h2><p class="field-hint">Add a single module from the student's university. The parent course will appear automatically when the student has at least one module.</p>
+                <form th:action="@{/admin/users/{id}/modules(id=${student.userId})}" method="post" class="module-form">
+                    <div class="field"><label for="courseFilter">Filter by course</label><select id="courseFilter" th:disabled="${modules.isEmpty()}"><option value="">All courses</option><option th:each="c : ${courses}" th:value="${c.id}" th:text="${c.code + ' · ' + c.name + ' (' + c.moduleCount + ' modules)'}">Course</option></select></div>
+                    <div class="field"><label for="moduleId">Module</label><select id="moduleId" name="moduleId" required th:disabled="${modules.isEmpty()}"><option value="" disabled selected>Select a module</option><option th:each="m : ${modules}" th:value="${m.id}" th:attr="data-course=${m.courseId}" th:text="${m.code + ' · ' + m.name + ' (' + m.courseCode + ')'}">Module</option></select></div>
+                    <button class="button button-primary" type="submit" th:disabled="${modules.isEmpty()}">+ Enroll module</button>
+                </form>
+                <p class="field-hint" th:if="${student.universityId != null and modules.isEmpty()}">No modules exist for the university's courses yet.</p>
+            </section>
+        </div>
+        <div class="record-grid">
+            <section class="panel"><div class="panel-head"><div><h2>Enrolled courses <span class="count-tag" th:text="${enrolledCourses.size()}">0</span></h2><p>Derived from module enrollments; courses with no enrolled modules do not appear</p></div></div>
+                <div class="record-list"><div class="record-item" th:each="c : ${enrolledCourses}"><span><strong th:text="${c.name}">Course</strong><small th:text="${c.code + ' · ' + c.moduleCount + '/' + c.totalModules + ' modules · ' + c.enrolledAt}">code</small></span><form th:action="@{/admin/users/{id}/courses/{courseId}/remove(id=${student.userId},courseId=${c.id})}" method="post" onsubmit="return confirm('Unenroll this student from ALL modules in this course? This will not erase quiz or progress history.');"><button type="submit" class="text-danger">Remove</button></form></div><div th:if="${enrolledCourses.isEmpty()}" class="empty-state">Not enrolled in any courses yet.</div></div>
+            </section>
+            <section class="panel"><div class="panel-head"><div><h2>Enrolled modules <span class="count-tag" th:text="${enrolledModules.size()}">0</span></h2><p>Individual module memberships</p></div></div>
+                <div class="record-list"><div class="record-item" th:each="m : ${enrolledModules}"><span><strong th:text="${m.code + ' · ' + m.name}">Module</strong><small th:text="${m.courseName + ' · ' + m.enrolledAt}">Course</small></span><form th:action="@{/admin/users/{id}/modules/{moduleId}/remove(id=${student.userId},moduleId=${m.id})}" method="post" onsubmit="return confirm('Remove this module enrollment?');"><button type="submit" class="text-danger">Remove</button></form></div><div th:if="${enrolledModules.isEmpty()}" class="empty-state">No module enrollments yet.</div></div>
+            </section>
+        </div>
+        <footer class="admin-footer">Courses are inferred from enrolled modules. Enrolling in a course adds its current modules; unenrolling removes those module registrations. Quiz and progress history is preserved.</footer>
+    </main>
+</div>
+<script th:src="@{/js/admin-users.js}" src="/js/admin-users.js" defer></script>
+</body>
+</html>
